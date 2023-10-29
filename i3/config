@@ -45,8 +45,8 @@ bindsym Mod4+Return exec nemo
 
 #monitor brigthness
 exec export X11_NIGHTMODE=0
-bindsym XF86MonBrightnessUp exec bash ~/.config/i3/brightness_up.sh
-bindsym XF86MonBrightnessDown exec bash ~/.config/i3/brightness_down.sh
+bindsym XF86MonBrightnessUp exec light -A 5
+bindsym XF86MonBrightnessDown exec light -T 0.7
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
 set $up k
@@ -203,7 +203,7 @@ bindsym Mod4+r mode "resize"
 # finds out, if available)
 bar {
         font pango:monospace 10
-        status_command python ~/projects/status/test.py
+        status_command i3status
 }
 
 for_window [all] title_window_icon off
