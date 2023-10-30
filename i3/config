@@ -39,7 +39,7 @@ exec --no-startup-id nm-applet
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym Mod4+o exec xset dpms force off
+bindsym Mod4+o exec xset dpms force off && loginctl lock-session
 bindsym Mod4+Pause exec sudo /root/hibernate.sh
 bindsym Mod4+Return exec nemo
 

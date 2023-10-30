@@ -5,16 +5,15 @@ general {
 
 order += "volume master"
 order += "disk /"
-order += "ethernet eno1"
+order += "wireless wlan0"
 order += "battery 0"
 order += "memory"
 order += "load"
 order += "tztime local"
 order += "tztime berlin"
 
-ethernet eno1 {
-        format_up = "E: %ip (%speed)"
-        format_down = "E: down"
+wireless wlan0 {
+
 }
 
 tztime local {
