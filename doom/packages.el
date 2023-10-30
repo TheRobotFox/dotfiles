@@ -50,3 +50,4 @@
 ;(unpin! t)
 
 (package! topspace)
+(package! impatient-mode)
