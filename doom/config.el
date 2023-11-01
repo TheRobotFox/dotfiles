@@ -253,6 +253,12 @@
 (advice-add 'evil-visual-deactivate-hook :before #'set-secondary-selection)
 (map! :map 'override "M-T" 'transpose-selections)
 
+;; edit-indirect
+(map! "C-c '" 'edit-indirect-region)
+
+;; latex
+(setq latex-run-command "lualatex")
+(setq pdf-latex-command "lualatex")
 
 (map! :leader "pw" 'org-agenda-file-to-front)
 (map! :leader "pW" 'org-remove-file)

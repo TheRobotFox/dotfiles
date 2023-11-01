@@ -51,7 +51,4 @@
 
 (package! topspace)
 (package! impatient-mode)
-<<<<<<< HEAD
-=======
-(package! fence-edit :recipe (:repo "https://github.com/aaronbieber/fence-edit.el" :files ("*.el")))
->>>>>>> 511f2dd (Fence)
+(package! edit-indirect)
