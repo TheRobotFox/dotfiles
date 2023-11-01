@@ -236,6 +236,19 @@
                  (kbd "M-p") 'evil-prev-flyspell-error
                  (kbd "M-n") 'evil-next-flyspell-error)
 
+;; ;; Babel
+(defun org-babel-edit-prep:C (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp))
+(defun org-babel-edit-prep:Rust (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp))
+(defun org-babel-edit-prep:java (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp))
+
+(setq org-babel-C-compiler "gcc -lm")
+
 ;;selection transpose
 ;;previous selection is stored on evil-visual exit
 ;;use M-T to activate
