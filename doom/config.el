@@ -96,6 +96,15 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
+(use-package multiple-cursors
+  :defer
+  :init
+  (add-hook 'multiple-cursors-mode-hook
+            (defun my/work-around-multiple-cursors-issue ()
+              (load "multiple-cursors-core.el")
+              (remove-hook 'multiple-cursors-mode-hook #'my/work-around-multiple-cursors-issue))))
+
+
 ;; Tab commands
 
 
