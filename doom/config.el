@@ -88,8 +88,6 @@
   :custom (evil-collection-want-find-usages-bindings t)
   :init (evil-collection-init))
 
-(modify-syntax-entry ?_ "w")
-
 (use-package evil-org
   :ensure t
   :after org
@@ -269,6 +267,10 @@
 ;; edit-indirect
 (map! "C-c '" 'edit-indirect-region)
 
+(with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol)
+    ;; make evil-search-word look for symbol rather than word boundaries
+    (setq-default evil-symbol-word-search t))
 ;; latex
 (setq latex-run-command "lualatex")
 (setq pdf-latex-command "lualatex")
