@@ -42,6 +42,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym Mod4+o exec xset dpms force off && loginctl lock-session
 bindsym Mod4+Pause exec sudo /root/hibernate.sh
 bindsym Mod4+Return exec nemo
+bindsym Mod4+BackSpace exec /home/new/.config/emacs/bin/org-capture
 
 #monitor brigthness
 exec export X11_NIGHTMODE=0
@@ -203,7 +204,7 @@ bindsym Mod4+r mode "resize"
 # finds out, if available)
 bar {
         font pango:monospace 10
-        status_command i3status
+        status_command python3 ~/projects/status/test.py
 }
 
 for_window [all] title_window_icon off
