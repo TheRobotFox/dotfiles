@@ -94,6 +94,34 @@
   :hook (org-mode . (lambda () evil-org-mode))
   :config
   (require 'evil-org-agenda)
+
+  (evil-define-key 'normal evil-org-mode-map
+                  (kbd "<up>") 'org-previous-visible-heading
+                  (kbd "<down>") 'org-next-visible-heading
+                  (kbd "<S-up>") 'org-previous-item
+                  (kbd "<S-down>") 'org-next-item
+                  (kbd "<C-M-down>") 'org-table-move-cell-down
+                  (kbd "<C-M-up>") 'org-table-move-cell-up
+                  (kbd "<C-M-left>") 'org-table-move-cell-left
+                  (kbd "<C-M-right>") 'org-table-move-cell-right
+                  (kbd "M-p") 'evil-prev-flyspell-error
+                  (kbd "M-n") 'evil-next-flyspell-error)
+
+  ;; ;; Babel
+  (defun org-babel-edit-prep:C (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp))
+  (defun org-babel-edit-prep:Rust (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp))
+  (defun org-babel-edit-prep:java (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp))
+
+  ;; Latex TOC pagebreak
+  (setq org-latex-toc-command "\\tableofcontents \\clearpage")
+
+  (setq org-babel-C-compiler "gcc -lm")
   (evil-org-agenda-set-keys))
 
 (use-package multiple-cursors
@@ -106,7 +134,7 @@
 
 
 ;; Tab commands
-
+(require 'org-roam-export)
 
 (add-hook 'persp-before-deactivate-functions
             (defun +workspaces-save-tab-bar-data-h (_)
@@ -213,6 +241,9 @@
 (map! "M-n" #'flycheck-next-error)
 (map! :leader "cx" #'switch-flycheck-list-errors)
 
+(map! "M-p" #'flycheck-previous-error)
+(map! "M-n" #'flycheck-next-error)
+
 
 ; Ispell
 (with-eval-after-load "ispell"
@@ -230,31 +261,6 @@
 (define-key evil-normal-state-map "gb" 'evil-switch-to-windows-last-buffer)
 (define-key evil-normal-state-map (kbd "C-q") 'evil-numbers/inc-at-pt)
 (define-key evil-normal-state-map (kbd "C-s") 'evil-numbers/dec-at-pt)
-
-(evil-define-key 'normal evil-org-mode-map
-                 (kbd "<up>") 'org-previous-visible-heading
-                 (kbd "<down>") 'org-next-visible-heading
-                 (kbd "<S-up>") 'org-previous-item
-                 (kbd "<S-down>") 'org-next-item
-                 (kbd "<C-M-down>") 'org-table-move-cell-down
-                 (kbd "<C-M-up>") 'org-table-move-cell-up
-                 (kbd "<C-M-left>") 'org-table-move-cell-left
-                 (kbd "<C-M-right>") 'org-table-move-cell-right
-                 (kbd "M-p") 'evil-prev-flyspell-error
-                 (kbd "M-n") 'evil-next-flyspell-error)
-
-;; ;; Babel
-(defun org-babel-edit-prep:C (babel-info)
-  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
-  (lsp))
-(defun org-babel-edit-prep:Rust (babel-info)
-  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
-  (lsp))
-(defun org-babel-edit-prep:java (babel-info)
-  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
-  (lsp))
-
-(setq org-babel-C-compiler "gcc -lm")
 
 ;;selection transpose
 ;;previous selection is stored on evil-visual exit

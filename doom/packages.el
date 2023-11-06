@@ -52,3 +52,4 @@
 (package! topspace)
 (package! impatient-mode)
 (package! edit-indirect)
+(package! org-transclusion)
