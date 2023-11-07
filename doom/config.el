@@ -22,7 +22,7 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -48,7 +48,7 @@
 
 (dolist (charset '(koi8))
   (set-fontset-font (frame-parameter nil 'font)
-    charset (font-spec :family "Fira Code" :height 140)))
+    charset (font-spec :family "FiraCode" :height 140)))
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
@@ -258,10 +258,6 @@
 ;; Git
 (map! :leader "gm" 'smerge-keep-current)
 
-(define-key evil-normal-state-map "gb" 'evil-switch-to-windows-last-buffer)
-(define-key evil-normal-state-map (kbd "C-q") 'evil-numbers/inc-at-pt)
-(define-key evil-normal-state-map (kbd "C-s") 'evil-numbers/dec-at-pt)
-
 ;;selection transpose
 ;;previous selection is stored on evil-visual exit
 ;;use M-T to activate
@@ -279,6 +275,10 @@
 (advice-add 'evil-visual-deactivate-hook :before #'set-secondary-selection)
 (map! :map 'override "M-T" 'transpose-selections)
 
+  ;; :config
+  (define-key evil-normal-state-map "gb" 'evil-switch-to-windows-last-buffer)
+  (define-key evil-normal-state-map (kbd "C-q") 'evil-numbers/inc-at-pt)
+  (define-key evil-normal-state-map (kbd "C-s") 'evil-numbers/dec-at-pt)
 ;; edit-indirect
 (map! "C-c '" 'edit-indirect-region)
 
