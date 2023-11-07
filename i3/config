@@ -47,8 +47,8 @@ bindsym Mod4+Shift+BackSpace exec /usr/bin/emacsclient --create-frame --alternat
 
 #monitor brigthness
 exec export X11_NIGHTMODE=0
-bindsym XF86MonBrightnessUp exec light -A 5
-bindsym XF86MonBrightnessDown exec light -T 0.7
+-bindsym XF86MonBrightnessUp exec bash ~/.config/i3/brightness_up.sh
+-bindsym XF86MonBrightnessDown exec bash ~/.config/i3/brightness_down.sh
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
 set $up k
