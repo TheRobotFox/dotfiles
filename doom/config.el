@@ -22,8 +22,8 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -48,7 +48,7 @@
 
 (dolist (charset '(koi8))
   (set-fontset-font (frame-parameter nil 'font)
-    charset (font-spec :family "FiraCode" :height 140)))
+    charset (font-spec :family "Fira Code" :height 140)))
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
@@ -289,6 +289,8 @@
 ;; latex
 (setq latex-run-command "lualatex")
 (setq pdf-latex-command "lualatex")
+;; (setq latex-run-command "latex")
+;; (setq pdf-latex-command "latex")
 
 (map! :leader "pw" 'org-agenda-file-to-front)
 (map! :leader "pW" 'org-remove-file)
