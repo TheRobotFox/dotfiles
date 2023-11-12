@@ -45,6 +45,8 @@ bindsym Mod4+Return exec nemo
 bindsym Mod4+BackSpace exec /home/new/.config/emacs/bin/org-capture
 bindsym Mod4+Shift+BackSpace exec /usr/bin/emacsclient --create-frame --alternate-editor=""
 bindsym Mod4+Shift+s exec /usr/bin/scrot -s -f -i -db 1
+bindsym Mod4+Shift+comma move workspace to output left
+bindsym Mod4+Shift+period move workspace to output right
 
 #monitor brigthness
 exec export X11_NIGHTMODE=0
