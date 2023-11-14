@@ -279,6 +279,7 @@
   (define-key evil-normal-state-map "gb" 'evil-switch-to-windows-last-buffer)
   (define-key evil-normal-state-map (kbd "C-q") 'evil-numbers/inc-at-pt)
   (define-key evil-normal-state-map (kbd "C-s") 'evil-numbers/dec-at-pt)
+  (define-key evil-insert-state-map (kbd "M-a") 'avy-goto-char-2)
 ;; edit-indirect
 (map! "C-c '" 'edit-indirect-region)
 
