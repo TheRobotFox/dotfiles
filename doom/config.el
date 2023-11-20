@@ -282,6 +282,7 @@
   (define-key evil-insert-state-map (kbd "M-a") 'avy-goto-char-2)
 ;; edit-indirect
 (map! "C-c '" 'edit-indirect-region)
+(add-hook 'css-mode-hook 'skewer-reload-stylesheets-start-editing)
 
 (with-eval-after-load 'evil
     (defalias #'forward-evil-word #'forward-evil-symbol)

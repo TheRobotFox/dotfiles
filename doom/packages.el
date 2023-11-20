@@ -50,6 +50,9 @@
 ;(unpin! t)
 
 (package! topspace)
-(package! impatient-mode)
+(package! skewer-mode)
+(package! skewer-mode)
+(package! skewer-reload-stylesheets)
+;; (package! impatient-mode)
 (package! edit-indirect)
 (package! org-transclusion)
