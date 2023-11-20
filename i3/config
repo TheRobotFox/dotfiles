@@ -63,7 +63,7 @@ set $right l
 floating_modifier Mod4
 
 # start a terminal
-bindsym Mod4+Shift+Return exec i3-sensible-terminal
+bindsym Mod4+Shift+Return exec alacritty
 
 # kill focused window
 bindsym Mod4+Shift+c kill
