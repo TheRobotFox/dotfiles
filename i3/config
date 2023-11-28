@@ -40,11 +40,12 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym Mod4+o exec xset dpms force off && loginctl lock-session
-bindsym Mod4+Pause exec sudo /root/hibernate.sh
+bindsym Mod4+Shift+Escape exec systemctl hibernate
+bindsym Mod4+Escape exec systemctl suspend
 bindsym Mod4+Return exec nemo
 bindsym Mod4+BackSpace exec /home/new/.config/emacs/bin/org-capture
 bindsym Mod4+Shift+BackSpace exec /usr/bin/emacsclient --create-frame --alternate-editor=""
-bindsym Mod4+Shift+s exec /usr/bin/scrot -s -f -i -db 1
+bindsym Mod4+Shift+s exec /usr/bin/gscreenshot -s -c
 bindsym Mod4+Shift+comma move workspace to output left
 bindsym Mod4+Shift+period move workspace to output right
 
