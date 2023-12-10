@@ -118,6 +118,8 @@
   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
   (lsp))
 
+  (setq org-babel-C++-compiler "g++ -std=c++23"
+
   ;; Latex TOC pagebreak
   (setq org-latex-toc-command "\\tableofcontents \\clearpage")
 
