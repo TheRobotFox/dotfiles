@@ -41,6 +41,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym Mod4+o exec xset dpms force off && loginctl lock-session
 bindsym Mod4+Shift+Escape exec systemctl hibernate
+bindsym Mod4+Control+Escape exec shutdown now
 bindsym Mod4+Escape exec systemctl suspend
 bindsym Mod4+Return exec nemo
 bindsym Mod4+BackSpace exec /home/new/.config/emacs/bin/org-capture

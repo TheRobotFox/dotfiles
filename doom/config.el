@@ -290,10 +290,12 @@
     ;; make evil-search-word look for symbol rather than word boundaries
     (setq-default evil-symbol-word-search t))
 ;; latex
-(setq latex-run-command "lualatex")
-(setq pdf-latex-command "lualatex")
-;; (setq latex-run-command "latex")
-;; (setq pdf-latex-command "latex")
+;; (setq latex-run-command "lualatex")
+;; (setq pdf-latex-command "lualatex")
+(setq latex-run-command "pdflatex")
+(setq pdf-latex-command "pdflatex")
+(setq tex-start-options "--shell-escape")
+(setq shell-escape-mode "-shell-escape")
 
 (map! :leader "pw" 'org-agenda-file-to-front)
 (map! :leader "pW" 'org-remove-file)
