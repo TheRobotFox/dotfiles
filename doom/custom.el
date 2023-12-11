@@ -6,6 +6,7 @@
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(org-agenda-files
    '("~/org/todo.org" "/home/new/org/tu/EI/Tut4.org" "/home/new/org/tu/RO/Tut3.org" "/home/new/org/tu/mfmt.org"))
+ '(org-export-backends '(ascii html icalendar latex md odt))
  '(warning-suppress-types '((initialization) (defvaralias))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
