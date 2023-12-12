@@ -297,7 +297,7 @@
 (setq latex-run-command "pdflatex")
 (setq pdf-latex-command "pdflatex")
 (setq tex-start-options "--shell-escape")
-(setq shell-escape-mode "-shell-escape")
+(setq shell-escape-mode "--shell-escape")
 
 (map! :leader "pw" 'org-agenda-file-to-front)
 (map! :leader "pW" 'org-remove-file)
