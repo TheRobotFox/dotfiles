@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(org-agenda-files
-   '("~/org/roam/20231130143243-trie_baum.org" "/home/new/org/roam/20231114081552-digital_entwurf.org" "/home/new/org/tu/RO/VL4.org" "/home/new/org/tu/EI/Tut4.org" "/home/new/org/tu/RO/Tut3.org" "/home/new/org/tu/mfmt.org"))
+   '("~/org/todo.org" "/home/new/org/roam/20231130143243-trie_baum.org" "/home/new/org/roam/20231114081552-digital_entwurf.org" "/home/new/org/tu/RO/VL4.org" "/home/new/org/tu/EI/Tut4.org" "/home/new/org/tu/RO/Tut3.org" "/home/new/org/tu/mfmt.org"))
  '(org-export-backends '(ascii html icalendar latex md odt reveal))
  '(org-latex-packages-alist '(("inkscapelatex=false" "svg" nil nil)))
  '(warning-suppress-types '((initialization) (defvaralias))))
