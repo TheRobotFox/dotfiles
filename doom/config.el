@@ -118,16 +118,14 @@
   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
   (lsp))
 
-  ;; (setq org-plantuml-jar-path (expand-file-name "/usr/share/java/plantuml/plantuml.jar"))
-  ;; (setq plantuml-default-exec-mode "jar")
-  ;; (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
   (setq org-plantuml-exec-mode 'plantuml)
   (setq org-plantuml-executable-path (expand-file-name "/usr/bin/plantuml"))
-  ;; (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
   (setq plantuml-jar-args '("-charset" "UTF-8" "-tsvg" "-theme" "crt-amber"))
   (setq org-plantuml-args '("-charset" "UTF-8" "-tsvg" "-theme" "crt-amber"))
-  ;; (setq org-babel-default-header-args:plantuml
-  ;;   '((:results . "file") (:exports . "results") (:cmdline . "-tsvg -theme toy")))
+
+ (org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((dot . t)))
 
   ;; Latex TOC pagebreak
   (setq org-latex-toc-command "\\tableofcontents \\clearpage")
@@ -136,7 +134,6 @@
   (setq org-babel-C++-compiler "g++ -std=c++23")
 
   (evil-org-agenda-set-keys))
-
 (use-package multiple-cursors
   :defer
   :init
