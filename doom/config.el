@@ -130,8 +130,8 @@
   ;; Latex TOC pagebreak
   (setq org-latex-toc-command "\\tableofcontents \\clearpage")
 
-  (setq org-babel-C-compiler "gcc -lm")
-  (setq org-babel-C++-compiler "g++ -std=c++23")
+  (setq org-babel-C-compiler "gcc -std=c23 -lm -I .")
+  (setq org-babel-C++-compiler "g++ -std=c++23 -I .")
 
   (evil-org-agenda-set-keys))
 (use-package multiple-cursors
@@ -144,6 +144,7 @@
 
 
 ;; Tab commands
+(require 'org-re-reveal)
 (require 'org-roam-export)
 
 (add-hook 'persp-before-deactivate-functions
