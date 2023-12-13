@@ -46,11 +46,7 @@ bindsym Mod4+Escape exec systemctl suspend
 bindsym Mod4+Return exec nemo
 bindsym Mod4+BackSpace exec /home/new/.config/emacs/bin/org-capture
 bindsym Mod4+Shift+BackSpace exec /usr/bin/emacsclient --create-frame --alternate-editor=""
-<<<<<<< HEAD
-bindsym Mod4+Shift+s exec /usr/bin/gscreenshot -s -c
-=======
 bindsym Mod4+Shift+s exec /usr/bin/gscreenshot -c -s
->>>>>>> f52e79f (lua escape)
 bindsym Mod4+Shift+comma move workspace to output left
 bindsym Mod4+Shift+period move workspace to output right
 
