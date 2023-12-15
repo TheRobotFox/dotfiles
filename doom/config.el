@@ -130,7 +130,7 @@
   ;; Latex TOC pagebreak
   (setq org-latex-toc-command "\\tableofcontents \\clearpage")
 
-  (setq org-babel-C-compiler "gcc -std=c23 -lm -I .")
+  (setq org-babel-C-compiler "gcc -std=c2x -lm -I .")
   (setq org-babel-C++-compiler "g++ -std=c++23 -I .")
 
   (evil-org-agenda-set-keys))
