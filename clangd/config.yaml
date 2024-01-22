@@ -1,0 +1,34 @@
+# hopefully use c++2b /c++23
+ If:                              # for C
+  PathMatch: [.*\.hpp, *\.cpp]
+  CompileFlags:
+    Add: [-Wall, -Wextra, -std=c++2x]
+    Compiler: g++
+If:                               # for C++
+  PathMatch: [.*\.h, *\.c]
+  CompileFlags:
+    Add: [-Wall, -Wextra, -std=c2x]
+    Compiler: gcc
+
+# index Standart Lib for Completion
+Index:
+  StandardLibrary: Yes
+
+# Tips for Modern style
+Diagnostics:
+  ClangTidy:
+    Add: modernize*
+    Remove: modernize-use-trailing-return-type
+
+AllScopes: Yes
+
+InlayHints:
+  BlockEnd: No
+  Designators: Yes
+  Enabled: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
+  TypeNameLimit: 24
+
+Hover:
+  ShowAKA: Yes
