@@ -54,5 +54,5 @@
 ;; (package! skewer-reload-stylesheets)
 (package! impatient-mode)
 (package! edit-indirect)
-(package! org-transclusion)
+;; (package! org-transclusion)
 (package! ob-mips :recipe (:host github :repo "therobotfox/ob-mips"))
