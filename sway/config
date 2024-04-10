@@ -6,6 +6,7 @@
 
 ### Variables
 #
+font FiraCode:monospace 8
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 # Home row direction keys, like vim
