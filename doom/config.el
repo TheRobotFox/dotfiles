@@ -290,6 +290,11 @@
   (define-key evil-normal-state-map (kbd "C-q") 'evil-numbers/inc-at-pt)
   (define-key evil-normal-state-map (kbd "C-s") 'evil-numbers/dec-at-pt)
   (define-key evil-insert-state-map (kbd "M-a") 'avy-goto-char-2)
+(evil-define-command evil-repeat-all ()
+  :repeat abort
+  :keep-visual t
+  (interactive) (evil-ex-execute "'<,'>norm."))
+  (define-key evil-visual-state-map (kbd ".") 'evil-repeat-all)
 ;; edit-indirect
 (map! "C-c '" 'edit-indirect-region)
 ;; (skewer-setup)

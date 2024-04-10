@@ -2,12 +2,13 @@
 step=20
 divider=1.5
 file=~/.config/i3/brightness
-nightmode=$(( $(cat file) +1))
-nightmode=$(echo "($nightmode>$step)*$step+($nightmode<=$step)*$nightmode" | bc)
+nightmode=$(( $(cat file) -1))
+nightmode=$(echo "$nightmode*($nightmode>=0)" | bc)
 
 red=$(echo "1+($nightmode)/$step/$divider" | bc -l)
 brightness=$(echo "1-($nightmode)/$step" | bc -l)
 
-echo $nightmode $red $brightness
-xrandr --output DP-2 --brightness $brightness  --gamma $red:1:1 --output DP-1-4 --brightness $brightness --gamma $red:1:1
+ddcutil setvcp 0x10 --bus 13 $brightness
+ddcutil setvcp 0x10 --bus 16 $nightmode
+xrandr --output DP-1 --gamma $red:1:1 --output DP-1-3 --brightness $brightness --gamma $red:1:1
 echo $nightmode > file
