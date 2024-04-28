@@ -59,13 +59,14 @@ bindsym Mod4+Shift+period move workspace to output right
 
 #monitor brigthness
 exec export X11_NIGHTMODE=0
-<<<<<<< HEAD
-bindsym XF86MonBrightnessUp exec light -A 5
-bindsym XF86MonBrightnessDown exec light -T 0.7
-=======
 bindsym XF86MonBrightnessUp exec light 10
 bindsym XF86MonBrightnessDown exec light -10
->>>>>>> 70130e6 (update)
+
+
+bindsym Mod4+Mod1+b exec xrandr --output DP-1 --off --output DP-2 --off --output HDMI-1 --auto --primary
+bindsym Mod4+Mod1+n exec xrandr --output DP-1 --auto --primary --output DP-2 --auto --right-of DP-1 --output HDMI-1 --off
+bindsym Mod4+Mod1+f exec xrandr --output DP-1 --auto --primary --output DP-2 --auto --right-of DP-1 --output HDMI-1 --auto --left-of DP-1
+
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
 set $up k
@@ -222,7 +223,7 @@ bindsym Mod4+r mode "resize"
 # finds out, if available)
 bar {
         font pango:monospace 10
-        status_command i3status
+        status_command python /home/new/projects/status/test.py
 }
 
 for_window [all] title_window_icon off

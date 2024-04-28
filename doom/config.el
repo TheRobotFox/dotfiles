@@ -312,6 +312,7 @@
 (setq tex-start-options "--shell-escape")
 (setq shell-escape-mode "--shell-escape")
 
+
 (map! :leader "pw" 'org-agenda-file-to-front)
 (map! :leader "pW" 'org-remove-file)
 
