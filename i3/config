@@ -59,13 +59,9 @@ bindsym Mod4+Shift+period move workspace to output right
 
 #monitor brigthness
 exec export X11_NIGHTMODE=0
-<<<<<<< HEAD
+# dummy light +/- daemon
 bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -T 0.7
-=======
-bindsym XF86MonBrightnessUp exec light 10
-bindsym XF86MonBrightnessDown exec light -10
->>>>>>> 70130e6 (update)
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
 set $up k
