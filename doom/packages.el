@@ -56,3 +56,4 @@
 (package! edit-indirect)
 ;; (package! org-transclusion)
 (package! ob-mips :recipe (:host github :repo "therobotfox/ob-mips"))
+(package! org-html-themes :recipe (:host github :repo "fniessen/org-html-themes"))

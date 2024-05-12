@@ -12,9 +12,9 @@ order += "load"
 order += "tztime local"
 order += "tztime berlin"
 
-wireless wlan0 {
+# wireless wlan0 {
 
-}
+# }
 
 tztime local {
         format = "%Y-%m-%d %H:%M:%S"

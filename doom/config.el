@@ -119,8 +119,8 @@
 
   (setq org-plantuml-exec-mode 'plantuml)
   (setq org-plantuml-executable-path (expand-file-name "/usr/bin/plantuml"))
-  (setq plantuml-jar-args '("-charset" "UTF-8" "-tsvg" "-theme" "crt-amber"))
-  (setq org-plantuml-args '("-charset" "UTF-8" "-tsvg" "-theme" "crt-amber"))
+  ;; (setq plantuml-jar-args '("-charset" "UTF-8" "-tsvg" "-theme" "crt-amber"))
+  (setq org-plantuml-args '("-charset" "UTF-8" "-tsvg")) ;;-theme" "crt-amber"))
 
  (org-babel-do-load-languages
  'org-babel-load-languages

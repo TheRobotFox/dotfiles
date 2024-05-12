@@ -152,11 +152,11 @@
        (lua +lsp +tree-sitter)               ; one-based indices? one-based indices
        ;;markdown          ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
-       ;;nix               ; I hereby declare "nix geht mehr!"
+       ;;nix               ; I hereby declare "nix geht mehr!e
        ;;ocaml             ; an objective camel
        (org +pretty +roam2 +dragndrop +gnuplot +present); organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
-       ;; plantuml          ; diagrams for confusing people more
+       plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python +lsp +tree-sitter +pyenv +pyright)            ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
