@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: bb
+# key: bb
+# --
+
+\\Bbb{${1:R}}$0

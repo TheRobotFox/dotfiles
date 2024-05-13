@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: math
+# key: math
+# key: m
+# --
+\\($1\\)$0

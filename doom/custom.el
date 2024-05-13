@@ -13,6 +13,8 @@
    '(:foreground default :background default :scale 2 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
      ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-latex-packages-alist '(("inkscapelatex=false" "svg" nil nil)))
+ '(org-safe-remote-resources
+   '("\\`https://fniessen\\.github\\.io/org-html-themes/org/theme-readtheorg\\.setup\\'"))
  '(warning-suppress-types '((initialization) (defvaralias))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
