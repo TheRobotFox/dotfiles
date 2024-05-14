@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: braces
+# key: br
+# condition: t
+# --
+\\left\\{\\right\\}
