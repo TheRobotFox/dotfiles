@@ -223,7 +223,7 @@ bindsym Mod4+r mode "resize"
 # finds out, if available)
 bar {
         font pango:monospace 10
-        status_command python /home/new/projects/status/test.py
+        status_command /home/new/.config/i3/status.sh
 }
 
 for_window [all] title_window_icon off
