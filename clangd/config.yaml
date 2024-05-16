@@ -1,15 +1,13 @@
-# hopefully use c++2b /c++23
-# hopefully use c++2b /c++23
 If:                              # for C++
   PathMatch: [.*\.hpp, .*\.cpp]
 CompileFlags:
-  Add: [-Wall, -Wextra, -std=c++26]
+  Add: [-Wall, -Wextra, -std=c++2b]
   Compiler: g++
 ---
 If:                               # for C
   PathMatch: [.*\.h, .*\.c]
 CompileFlags:
-  Add: [-Wall, -Wextra, -std=c26]
+  Add: [-Wall, -Wextra, -std=c23]
   Compiler: gcc
 ---
 # index Standart Lib for Completion
@@ -36,5 +34,5 @@ Hover:
   ShowAKA: Yes
 
 # Formatting
-BasedOnStyle: LLVM
-IndentWidth: 4
+# BasedOnStyle: LLVM
+# IndentWidth: 4
