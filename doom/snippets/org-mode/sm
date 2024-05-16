@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: small matrix
+# key: sm
+# condition: t
+# --
+\left[\begin{smallmatrix}
+$1
+\end{smallmatrix}\right]$0
