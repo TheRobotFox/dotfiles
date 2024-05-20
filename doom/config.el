@@ -214,6 +214,8 @@
 (defun zen-mode-clear ()
   (remove-overlays 1 2 'zen--remove-from-buffer-tag t))
 
+(setq pixel-scroll-precision-large-scroll-height 40.0)
+
 ;; load internal topspace functions??
 ;;(topspace-default-active)
 ;; (advice-add 'topspace--enable :after #'zen-mode-bodge)
