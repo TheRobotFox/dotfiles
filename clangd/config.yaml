@@ -1,14 +1,14 @@
-If:                              # for C++
-  PathMatch: [.*\.hpp, .*\.cpp]
-CompileFlags:
-  Add: [-Wall, -Wextra, -std=c++2b]
-  Compiler: g++
----
 If:                               # for C
   PathMatch: [.*\.h, .*\.c]
 CompileFlags:
   Add: [-Wall, -Wextra, -std=c23]
   Compiler: gcc
+---
+If:                              # for C++
+  PathMatch: [.*\.hpp, .*\.cpp]
+CompileFlags:
+  Add: [-Wall, -Wextra, -std=c++26]
+  Compiler: g++
 ---
 # index Standart Lib for Completion
 Index:

@@ -1,8 +1,6 @@
 # -*- mode: snippet -*-
 # name: bmatrix
-# key: bmatrix
 # key: bm
 # --
 \begin{bmatrix}
-$1
-\end{bmatrix}$0
+`(apply 'concat (let ((rows '())) (while (progn (let ((s (read-string "row:"))) (if (not (string-empty-p s)) (progn (push (concat (string-replace " " "&" s) "\\\\\n") rows) t) nil)))) (nreverse rows)))` \end{bmatrix}$0

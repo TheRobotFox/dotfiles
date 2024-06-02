@@ -1,6 +1,5 @@
 # -*- mode: snippet -*-
 # name: curley braces
 # key: cb
-# condition: t
 # --
 \\left\\{$1\\right\\}$0
