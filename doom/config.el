@@ -323,9 +323,9 @@
 (load-library "ox-gfm-autoloads")
 (eval-after-load "org"
 '(load-library "ox-gfm"))
-;; (setq org-reveal-root "file:///usr/lib/node_modules/reveal.js")
-;; (load-library "ox-reveal-autoloads")
-;; (eval-after-load "org"
-;; '(load-library "ox-reveal"))
+(setq org-reveal-root "file:///usr/lib/node_modules/reveal.js")
+(load-library "ox-reveal-autoloads")
+(eval-after-load "org"
+'(load-library "ox-reveal"))
 
 (require 'org-roam-export)

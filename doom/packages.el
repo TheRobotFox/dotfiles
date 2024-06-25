@@ -58,4 +58,4 @@
 (package! ob-mips :recipe (:host github :repo "therobotfox/ob-mips"))
 (package! org-html-themes :recipe (:host github :repo "fniessen/org-html-themes"))
 (package! ox-gfm :recipe (:host github :repo "larstvei/ox-gfm"))
-;; (package! ox-reveal :recipe (:host github :repo "yjwen/org-reveal"))
+(package! ox-reveal :recipe (:host github :repo "yjwen/org-reveal"))
