@@ -51,7 +51,7 @@ bindsym Mod4+Control+Escape exec shutdown now
 bindsym Mod4+Escape exec systemctl suspend
 bindsym Mod4+Return exec nemo
 bindsym Mod4+BackSpace exec /home/new/.config/emacs/bin/org-capture
-bindsym Mod4+Shift+BackSpace exec /usr/bin/emacsclient --create-frame --alternate-editor=""
+bindsym Mod4+Shift+BackSpace exec /home/new/.config/emacs/bin/doom +everywhere
 bindsym Mod4+Shift+s exec /usr/bin/fish -c 'sleep 0.1 && scrot -s -i - | xclip -selection clipboard -t image/png'
 bindsym Mod4+Control+s exec /usr/bin/fish -c 'sleep 0.1 && scrot -s -i'
 bindsym Mod4+Shift+comma move workspace to output left

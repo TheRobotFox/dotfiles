@@ -1,7 +1,7 @@
 If:                               # for C
   PathMatch: [.*\.h, .*\.c]
 CompileFlags:
-  Add: [-Wall, -Wextra, -std=c23]
+  Add: [-Wall, -Wextra, -std=c2x]
   Compiler: gcc
 ---
 If:                              # for C++
