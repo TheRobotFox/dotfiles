@@ -290,8 +290,21 @@
   (define-key evil-normal-state-map (kbd "C-q") 'evil-numbers/inc-at-pt)
   (define-key evil-normal-state-map (kbd "C-s") 'evil-numbers/dec-at-pt)
   (define-key evil-insert-state-map (kbd "M-a") 'avy-goto-char-2)
-  (define-key evil-insert-state-map (kbd "M-TAB") 'yas-next-field)
-  (define-key evil-insert-state-map (kbd "S-TAB") 'yas-prev-field)
+
+
+
+  ;; (define-key evil-insert-state-map (kbd "M-TAB") 'yas-next-field)
+  ;; (define-key evil-insert-state-map (kbd "S-TAB") 'yas-prev-field)
+;; (defun my/org-tab-conditional ()
+;;   (interactive)
+;;   (if (yas-active-snippets)
+;;       (yas-next-field-or-maybe-expand)
+;;     (org-cycle)))
+
+;; (map! :after evil-org
+;;       :map evil-org-mode-map
+;;       :i "<tab>" #'my/org-tab-conditional)
+
 (evil-define-command evil-repeat-all ()
   :repeat abort
   :keep-visual t
