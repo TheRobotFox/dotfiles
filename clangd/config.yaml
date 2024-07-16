@@ -1,11 +1,7 @@
 If:                               # for C
   PathMatch: [.*\.h, .*\.c]
 CompileFlags:
-<<<<<<< HEAD
-  Add: [-Wall, -Wextra, -std=c2x]
-=======
-  Add: [-Wall, -Wextra, -std=c2x, -xc]
->>>>>>> 9febced (clangd)
+  Add: [-Wall, -Wextra, -std=c17]
   Compiler: gcc
 ---
 If:                              # for C++
@@ -15,8 +11,8 @@ CompileFlags:
   Compiler: g++
 ---
 # index Standart Lib for Completion
-Index:
-  StandardLibrary: Yes
+# Index:
+#   StandardLibrary: Yes
 
 # Tips for Modern style
 Diagnostics:

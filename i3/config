@@ -63,9 +63,9 @@ bindsym XF86MonBrightnessUp exec /home/new/.config/i3/brightness_up.sh
 bindsym XF86MonBrightnessDown exec /home/new/.config/i3/brightness_down.sh
 
 
-bindsym Mod4+Mod1+b exec xrandr --output DP-1 --off --output DP-2 --off --output HDMI-1 --auto --primary && nitrogen --restore
-bindsym Mod4+Mod1+n exec xrandr --output DP-1 --auto --primary --output DP-2 --auto --right-of DP-1 --output HDMI-1 --off && nitrogen --restore
-bindsym Mod4+Mod1+f exec xrandr --output DP-1 --auto --primary --output DP-2 --auto --right-of DP-1 --output HDMI-1 --auto --left-of DP-1 && nitrogen --restore
+bindsym Mod4+Mod1+b exec xrandr --output DP-2 --off --output DP-0 --off --output HDMI-0 --auto --primary && nitrogen --restore
+bindsym Mod4+Mod1+n exec xrandr --output DP-2 --auto --primary --output DP-0 --auto --right-of DP-2 --output HDMI-0 --off && nitrogen --restore
+bindsym Mod4+Mod1+f exec xrandr --output DP-2 --auto --primary --output DP-0 --auto --right-of DP-2 --output HDMI-0 --auto --left-of DP-2 && nitrogen --restore
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
