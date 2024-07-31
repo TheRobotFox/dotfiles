@@ -43,10 +43,10 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
+;; (setq doom-font (font-spec :family "Parchment MF" :size 22 )
+;;      doom-variable-pitch-font (font-spec :family "Parchment MF" :size 23))
 ;; set font size
-;; (set-face-attribute 'default nil :height 150)
-
-;; (setq doom-font (font-spec :family "Fira Code" :size 22))
+(set-face-attribute 'default nil :height 150)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
