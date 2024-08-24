@@ -11,7 +11,7 @@
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:monospace 10
 
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
@@ -24,6 +24,7 @@ font pango:monospace 8
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id /home/new/.config/i3/brightness_startup.sh
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -59,8 +60,8 @@ bindsym Mod4+Shift+period move workspace to output right
 
 #monitor brigthness
 exec export X11_NIGHTMODE=0
-bindsym XF86MonBrightnessUp exec /home/new/.config/i3/brightness_up.sh
-bindsym XF86MonBrightnessDown exec /home/new/.config/i3/brightness_down.sh
+bindsym Mod4+KP_Multiply exec /home/new/.config/i3/brightness_up.sh
+bindsym Mod4+KP_Divide  exec /home/new/.config/i3/brightness_down.sh
 
 
 bindsym Mod4+Mod1+b exec xrandr --output DP-2 --off --output DP-0 --off --output HDMI-0 --auto --primary && nitrogen --restore
@@ -223,7 +224,8 @@ bindsym Mod4+r mode "resize"
 # finds out, if available)
 bar {
         font pango:monospace 10
-        status_command /home/new/.config/i3/status.sh
+        #status_command /home/new/.config/i3/status.sh
+        status_command i3status
 }
 
 for_window [all] title_window_icon off
