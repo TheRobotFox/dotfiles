@@ -22,7 +22,7 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "Fira Code" :size 22 :weight 'semi-light)
+(setq doom-font (font-spec :family "Fira Code" :size 22 )
      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 23))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -260,7 +260,7 @@
 (with-eval-after-load "ispell"
  (setenv "LANG" "en_US.UTF-8")
  (setq ispell-program-name "hunspell")
- (setq ispell-dictionary "de_DE,en_US,en_GB")
+ (setq ispell-dictionary "de_DE,en_US")
  (ispell-set-spellchecker-params)
  (ispell-hunspell-add-multi-dic "de_DE,en_US,en_GB"))
 
@@ -371,42 +371,47 @@
 (eval-after-load "org"
 '(load-library "ox-reveal"))
 
-;; NOTE: These settings might not be ideal for your machine, tweak them as needed!
-(set-face-attribute 'default nil :font doom-font :weight 'light :height 180)
-(set-face-attribute 'fixed-pitch nil :font doom-font :weight 'light :height 190)
-(set-face-attribute 'variable-pitch nil :font doom-variable-pitch-font :weight 'light :height 1.3)
-
-;;; Org Mode Appearance ------------------------------------
-
+(eval-after-load "org" '(progn
 ;; Load org-faces to make sure we can set appropriate faces
-(require 'org-faces)
+        (require 'org-faces)
 
-;; Hide emphasis markers on formatted text
-(setq org-hide-emphasis-markers t)
+        (set-face-attribute 'line-number nil :inherit '(fixed-pitch))
+        (set-face-attribute 'line-number-current-line nil :inherit '(fixed-pitch))
 
-;; Resize Org headings
-(dolist (face '((org-level-1 . 1.4)
-                (org-level-2 . 1.3)
-                (org-level-3 . 1.15)
-                (org-level-4 . 1.1)
-                (org-level-5 . 1.2)
-                (org-level-6 . 1.2)
-                (org-level-7 . 1.2)
-                (org-level-8 . 1.2)))
-  (set-face-attribute (car face) nil :font doom-variable-pitch-font :weight 'medium :height (cdr face)))
+        ;; NOTE: These settings might not be ideal for your machine, tweak them as needed!
+        ;; (set-face-attribute 'default nil :font doom-font :weight 'medium :height 180)
+        ;; (set-face-attribute 'fixed-pitch nil :font doom-font :weight 'medium :height 190)
+        ;; (set-face-attribute 'variable-pitch nil :font doom-variable-pitch-font :weight 'semi-light :height 1.15)
 
-;; Make the document title a bit bigger
-(set-face-attribute 'org-document-title nil :font doom-variable-pitch-font :weight 'bold :height 1.3)
+        ;;; Org Mode Appearance ------------------------------------
 
-;; Make sure certain org faces use the fixed-pitch face when variable-pitch-mode is on
-(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+        ;; Hide emphasis markers on formatted text
+        (setq org-hide-emphasis-markers t)
+
+        ;; Resize Org headings
+        (dolist (face '((org-level-1 . 1.4)
+                        (org-level-2 . 1.3)
+                        (org-level-3 . 1.15)
+                        (org-level-4 . 1.1)
+                        (org-level-5 . 1.2)
+                        (org-level-6 . 1.2)
+                        (org-level-7 . 1.2)
+                        (org-level-8 . 1.2)))
+        (set-face-attribute (car face) nil :font doom-variable-pitch-font :weight 'medium :height (cdr face)))
+
+        ;; Make the document title a bit bigger
+        (set-face-attribute 'org-document-title nil :font doom-variable-pitch-font :weight 'bold :height 1.3)
+
+        ;; Make sure certain org faces use the fixed-pitch face when variable-pitch-mode is on
+        (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+        (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+        (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+        (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+        (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+        (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+        (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+        (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)))
 
 (defun my/org-present-prepare-slide (buffer-name heading)
   ;; Show only top-level headlines

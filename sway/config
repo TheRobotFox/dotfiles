@@ -6,7 +6,7 @@
 
 ### Variables
 #
-font FiraCode:monospace 8
+font Fira Sans 8
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 # Home row direction keys, like vim
@@ -19,9 +19,10 @@ set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu wofi
+set $menu wmenu-run
+#wofi
 
-# Audio
+#Audio
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -33,8 +34,8 @@ bindsym $mod+Shift+Escape exec systemctl hibernate
 bindsym $mod+Control+Escape exec shutdown now
 bindsym $mod+Escape exec systemctl suspend
 
-bindsym XF86MonBrightnessUp exec bash ~/.config/i3/brightness_up.sh
-bindsym XF86MonBrightnessDown exec bash ~/.config/i3/brightness_down.sh
+bindsym $mod+KP_Multiply exec bash ~/.config/i3/brightness_up.sh
+bindsym $mod+KP_Divide exec bash ~/.config/i3/brightness_down.sh
 
 bindsym $mod+o exec swaymsg "output * power off"
 bindsym $mod+i exec swaymsg "output * power on"
@@ -56,8 +57,6 @@ output * bg ~/.config/sway/wallpaper.jpeg fill
 #
 # Example configuration:
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
-output DP-3 resolution 3840x2160 position 0,0
-output DP-1 resolution 3840x2160 position 3840,0
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
@@ -65,7 +64,8 @@ output DP-1 resolution 3840x2160 position 3840,0
 #
 # Example configuration:
 #
- exec swayidle -w timeout 300 'swaymsg "output * power off"' resume 'swaymsg "output * power on"'
+exec swayidle -w timeout 300 'swaymsg "output * power off"' resume 'swaymsg "output * power on"'
+exec wl-gammarelay
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -75,17 +75,22 @@ output DP-1 resolution 3840x2160 position 3840,0
 #
 # Example configuration:
 #
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
-input * xkb_layout "us"
-input * xkb_variant "altgr-intl"
+
+input type:touchpad {
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
+
+input * {
+    xkb_layout "de"
+}
+
+# input * xkb_variant "latin1"
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
+# output eDP-1 scale 1.25
 
 ### Key bindings
 #
@@ -235,7 +240,8 @@ bar {
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     font pango:monospace 10
-    status_command python3 ~/projects/status/test.py
+    # status_command python3 ~/projects/status/test.py
+    status_command i3status
 
     colors {
         statusline #ffffff
