@@ -126,6 +126,7 @@
  'org-babel-load-languages
  '((dot . t)))
 
+
   (setq org-babel-C-compiler "gcc -std=c2x -lm -I .")
   (setq org-babel-C++-compiler "g++ -std=c++23 -I .")
 
