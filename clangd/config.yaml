@@ -1,18 +1,19 @@
 If:                               # for C
   PathMatch: [.*\.h, .*\.c]
 CompileFlags:
-  Add: [-Wall, -Wextra, -std=c17]
-  Compiler: gcc
+  Add: [-Wall, -Wextra, -xc]
+  Remove: [-march=*, -mabi=*, -mcpu=*]
+  Compiler: clang
 ---
 If:                              # for C++
   PathMatch: [.*\.hpp, .*\.cpp]
 CompileFlags:
-  Add: [-Wall, -Wextra, -std=c++2c, -xc++]
-  Compiler: g++
+  Add: [-Wall, -Wextra, -std=c++2b]
+  Compiler: clang++
 ---
 # index Standart Lib for Completion
-# Index:
-#   StandardLibrary: Yes
+Index:
+  StandardLibrary: Yes
 
 # Tips for Modern style
 Diagnostics:
