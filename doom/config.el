@@ -126,10 +126,7 @@
  'org-babel-load-languages
  '((dot . t)))
 
-  ;; Latex TOC pagebreak
-  (setq org-latex-toc-command "\\tableofcontents \\clearpage")
-(add-to-list 'org-latex-packages-alist
-             '("AUTO" "babel" t ("pdflatex" "xelatex" "lualatex")))
+
 
   (setq org-babel-C-compiler "gcc -std=c2x -lm -I .")
   (setq org-babel-C++-compiler "g++ -std=c++23 -I .")
