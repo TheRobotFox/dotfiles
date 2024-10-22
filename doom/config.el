@@ -143,49 +143,6 @@
               (load "multiple-cursors-core.el")
               (remove-hook 'multiple-cursors-mode-hook #'my/work-around-multiple-cursors-issue))))
 
-
-;; Tab commands
-
-(add-hook 'persp-before-deactivate-functions
-            (defun +workspaces-save-tab-bar-data-h (_)
-              (when (get-current-persp)
-                (set-persp-parameter
-                 'tab-bar-tabs (tab-bar-tabs)))))
-
-(add-hook 'persp-activated-functions
-        (defun +workspaces-load-tab-bar-data-h (_)
-        (tab-bar-tabs-set (persp-parameter 'tab-bar-tabs))
-        (tab-bar--update-tab-bar-lines t)))
-
-(add-hook 'persp-before-save-state-to-file-functions
-              (defun +workspaces-save-tab-bar-data-to-file-h (&rest _)
-                (when (get-current-persp)
-                  (set-persp-parameter 'tab-bar-tabs (frameset-filter-tabs (tab-bar-tabs) nil nil t)))))
-
-(defun tab-move-back ()
-  (interactive)
-  (tab-move -1))
-
-(defun tab-bar-toggle ()
-  (interactive)
-  (setq tab-bar-show (not tab-bar-show))
-  (tab-bar--update-tab-bar-lines))
-
-(defun tab-new-rename ()
-  (interactive)
-        (tab-new)
-        (tab-rename))
-
-(map! "M-j" #'tab-previous)
-(map! "M-k" #'tab-next)
-(map! "M-J" #'tab-move-back)
-(map! "M-K" #'tab-move)
-(map! :leader "W n" #'tab-new)
-(map! :leader "W t" #'toggle-frame-tab-bar)
-(map! :leader "W N" #'tab-new-rename)
-(map! :leader "W r" #'tab-rename)
-(map! :leader "W c" #'tab-close)
-
 ;; Buffer movement
 (map! "<C-left>" #'next-buffer)
 (map! "<C-right>" #'previous-buffer)
@@ -216,27 +173,6 @@
 
 (setq pixel-scroll-precision-large-scroll-height 40.0)
 
-;; load internal topspace functions??
-;;(topspace-default-active)
-;; (advice-add 'topspace--enable :after #'zen-mode-bodge)
-;; (advice-add 'topspace--disable :after #'zen-mode-clear)
-
-;; (defun zen-mode-evil-scroll-up (&optional lines)
-;;   (setq lines (or lines (max 0 evil-scroll-count)))
-;;   (when (zerop lines)
-;;     (setq lines (/ (window-body-height) 2)))
-;;     (scroll-down lines)
-;;     (print lines))
-
-;; (defun zen-mode-evil-scroll-down (&optional lines)
-;;   (setq lines (or lines (max 0 evil-scroll-count)))
-;;   (when (zerop lines)
-;;     (setq lines (/ (window-body-height) 2)))
-;;     (scroll-up lines))
-
-;; (advice-add #'evil-scroll-up :override #'zen-mode-evil-scroll-up)
-;; (advice-add #'evil-scroll-down :override #'zen-mode-evil-scroll-down)
-
 (advice-remove #'evil-scroll-up #'zen-mode-evil-scroll-up)
 (advice-remove #'evil-scroll-down #'zen-mode-evil-scroll-down)
 
@@ -253,10 +189,6 @@
 (map! "M-n" #'flycheck-next-error)
 (map! :leader "cx" #'switch-flycheck-list-errors)
 
-(map! "M-p" #'flycheck-previous-error)
-(map! "M-n" #'flycheck-next-error)
-
-
 ; Ispell
 (with-eval-after-load "ispell"
  (setenv "LANG" "en_US.UTF-8")
@@ -269,23 +201,6 @@
 
 ;; Git
 (map! :leader "gm" 'smerge-keep-current)
-
-;;selection transpose
-;;previous selection is stored on evil-visual exit
-;;use M-T to activate
-(defvar secondary-selection)
-
-(defun transpose-selections ()
-    (interactive)
-    (if (and (mark) (car secondary-selection))
-        (transpose-regions (mark) (point) (car secondary-selection) (nth 1 secondary-selection) t)))
-
-(defun set-secondary-selection ()
-    (interactive)
-    (setq secondary-selection (list (mark) (1+ (point)))))
-
-(advice-add 'evil-visual-deactivate-hook :before #'set-secondary-selection)
-(map! :map 'override "M-T" 'transpose-selections)
 
   ;; :config
   (define-key evil-normal-state-map "gb" 'evil-switch-to-windows-last-buffer)
@@ -348,16 +263,6 @@
         (define-key gud-mode-map (kbd "C-r") 'gud-run)
         ;; (define-key gud-mode-map (kbd "C-u") 'gud-until)
         )
-
-;;   (define-key evil-insert-state-map (kbd "C-j") 'company-complete-common)
-;; (with-eval-after-load 'company
-;;   (define-key company-active-map (kbd "C-SPC") 'company-complete-selection)
-;;   (define-key company-active-map (kbd "C-s") 'company-complete-selection)
-;;   (define-key company-active-map (kbd "TAB") nil)
-;;   (define-key company-active-map (kbd "S-TAB") nil)
-;;   (setq company-preview-overlay t))
-
-;; (global-set-key (kbd "<tab>") #'company-indent-or-complete-common)
 
 (map! :leader "pw" 'org-agenda-file-to-front)
 (map! :leader "pW" 'org-remove-file)
