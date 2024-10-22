@@ -143,11 +143,6 @@
               (load "multiple-cursors-core.el")
               (remove-hook 'multiple-cursors-mode-hook #'my/work-around-multiple-cursors-issue))))
 
-(setq haskell-hoogle-server-command (lambda (port)
-                (list "stack" "hoogle" "--" "server"
-                        "--local"
-                        "-p"
-                        (number-to-string port))))
 
 ;; Buffer movement
 (map! "<C-left>" #'next-buffer)
