@@ -45,6 +45,8 @@ bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
+bindsym Mod4+i exec ~/.config/i3/nmcn.sh
+
 # Power
 bindsym Mod4+o exec xset dpms force off && loginctl lock-session
 bindsym Mod4+Shift+Escape exec systemctl hibernate
