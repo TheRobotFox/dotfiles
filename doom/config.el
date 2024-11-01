@@ -126,11 +126,6 @@
  'org-babel-load-languages
  '((dot . t)))
 
-  ;; Latex TOC pagebreak
-  (setq org-latex-toc-command "\\tableofcontents \\clearpage")
-(add-to-list 'org-latex-packages-alist
-             '("AUTO" "babel" t ("pdflatex" "xelatex" "lualatex")))
-
   (setq org-babel-C-compiler "gcc -std=c2x -lm -I .")
   (setq org-babel-C++-compiler "g++ -std=c++23 -I .")
 
@@ -236,16 +231,20 @@
     (defalias #'forward-evil-word #'forward-evil-symbol)
     ;; make evil-search-word look for symbol rather than word boundaries
     (setq-default evil-symbol-word-search t))
+
+
+
 ;; latex
+
+  ;; Latex TOC pagebreak
+(setq org-latex-toc-command "\\tableofcontents \\clearpage")
 ;; (setq latex-run-command "lualatex")
 ;; (setq pdf-latex-command "lualatex")
 (setq latex-run-command "pdflatex")
 (setq pdf-latex-command "pdflatex")
-(setq tex-start-options "--shell-escape")
+(setq TeX-command-extra-options "--shell-escape")
 (setq shell-escape-mode "--shell-escape")
-(setq org-latex-listings 'minted)
-  (require 'ox-latex)
-  (add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-src-block-backend 'minted)
 (setq org-reveal-hlevel 2)
 
 (evil-define-key 'normal gdb-edit-locals-map-1 (kbd "c") 'gdb-edit-value)

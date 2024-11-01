@@ -69,6 +69,8 @@ bindsym Mod4+KP_Divide  exec /home/new/.config/i3/brightness_down.sh
 bindsym Mod4+Mod1+b exec xrandr --output DP-2 --off --output DP-0 --off --output HDMI-0 --auto --primary && nitrogen --restore
 bindsym Mod4+Mod1+n exec xrandr --output DP-2 --auto --primary --output DP-0 --auto --right-of DP-2 --output HDMI-0 --off && nitrogen --restore
 bindsym Mod4+Mod1+f exec xrandr --output DP-2 --auto --primary --output DP-0 --auto --right-of DP-2 --output HDMI-0 --auto --left-of DP-2 && nitrogen --restore
+bindsym Mod4+Mod1+l exec ddcutil -n 9SY64P3 setvp 0x60 0x0f
+bindsym Mod4+Mod1+h exec ddcutil -n 9SY64P3 setvp 0x60 0x1b
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
