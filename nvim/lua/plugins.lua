@@ -66,7 +66,7 @@ return require("packer").startup(function(use)
 		use(require "_hover_nvim")
 		use(require "_fzf")
 		use(require "_coc_nvim")
-		use(require "_nvim-tree")
+		-- use(require "_nvim-tree")
 		use(require "_git-conflict")
 		-- use(require "_trouble_nvim")
 
