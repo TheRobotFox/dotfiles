@@ -44,7 +44,8 @@ bindsym $mod+i exec swaymsg "output * power on"
 bindsym $mod+Return exec nemo
 bindsym $mod+BackSpace exec /home/new/.config/emacs/bin/org-capture
 bindsym $mod+Shift+BackSpace exec /usr/bin/emacsclient --create-frame --alternate-editor=""
-bindsym $mod+Shift+s exec /usr/bin/gscreenshot -c -s
+bindsym $mod+Shift+s exec slurp | grim -g - - | wl-copy
+bindsym $mod+Control+s exec slurp | grim -g -
 
 # Movement
 bindsym $mod+Shift+comma move workspace to output left
