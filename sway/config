@@ -105,10 +105,6 @@ input type:touchpad {
 }
 
 input * {
-    xkb_layout "de"
-}
-
-input "1452:591:NuPhy_Halo75" {
     xkb_layout "us"
     xkb_variant "altgr-intl"
 }
@@ -116,6 +112,7 @@ input "1452:598:CX_2.4G_Wireless_Receiver" {
     xkb_layout "us"
     xkb_variant "altgr-intl"
 }
+
 
 # input * xkb_variant "latin1"
 # You can get the names of your inputs by running: swaymsg -t get_inputs
