@@ -47,8 +47,8 @@ bindsym $mod+Shift+Escape exec systemctl hibernate
 bindsym $mod+Control+Escape exec shutdown now
 bindsym $mod+Escape exec systemctl suspend
 
-bindsym $mod+KP_Multiply exec bash ~/.config/sway/brightness_up.sh
-bindsym $mod+KP_Divide exec bash ~/.config/sway/brightness_down.sh
+bindsym XF86MonBrightnessUp exec bash ~/.config/i3/brightness_up.sh
+bindsym XF86MonBrightnessDown exec bash ~/.config/i3/brightness_down.sh
 exec_always ~/.config/sway/brightness_startup.sh
 
 bindsym $mod+o exec waylock
