@@ -6,7 +6,8 @@
 
 ### Variables
 #
-font Fira Sans 8
+# font Fira Sans 8
+font pango:monospace 8
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 # Home row direction keys, like vim
@@ -22,6 +23,13 @@ set $term foot
 set $menu wmenu-run
 #wofi
 
+#Beauti
+gaps inner 10
+blur enable
+blur_noise 0.1
+shadows enable
+corner_radius 5
+default_border pixel
 #Audio
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2%
@@ -29,16 +37,22 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
+
+# Network
+bindsym Mod4+i exec ~/.config/i3/nmcn.sh
+exec --no-startup-id nm-applet
+
 # Power
 bindsym $mod+Shift+Escape exec systemctl hibernate
 bindsym $mod+Control+Escape exec shutdown now
 bindsym $mod+Escape exec systemctl suspend
 
-bindsym $mod+KP_Multiply exec bash ~/.config/i3/brightness_up.sh
-bindsym $mod+KP_Divide exec bash ~/.config/i3/brightness_down.sh
+bindsym $mod+KP_Multiply exec bash ~/.config/sway/brightness_up.sh
+bindsym $mod+KP_Divide exec bash ~/.config/sway/brightness_down.sh
+exec_always ~/.config/sway/brightness_startup.sh
 
-bindsym $mod+o exec swaymsg "output * power off"
-bindsym $mod+i exec swaymsg "output * power on"
+bindsym $mod+o exec waylock
+# bindsym $mod+i exec swaymsg "output * power on"
 
 # Misc
 bindsym $mod+Return exec nemo
@@ -65,8 +79,9 @@ output * bg ~/.config/sway/wallpaper.jpeg fill
 #
 # Example configuration:
 #
-exec swayidle -w timeout 300 'swaymsg "output * power off"' resume 'swaymsg "output * power on"'
+# exec swayidle -w timeout 300 'swaymsg "output * power off"' resume 'swaymsg "output * power on"'
 exec wl-gammarelay
+exec swayidle timeout 300 "systemctl suspend" before-sleep 'waylock'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -86,6 +101,11 @@ input type:touchpad {
 
 input * {
     xkb_layout "de"
+}
+
+input "1452:591:NuPhy_Halo75" {
+    xkb_layout "us"
+    xkb_variant "altgr-intl"
 }
 
 # input * xkb_variant "latin1"
@@ -145,6 +165,8 @@ input * {
 #
 # Workspaces:
 #
+    bindgesture swipe:3:left workspace next
+    bindgesture swipe:3:right workspace prev
     # Switch to workspace
     bindsym $mod+1 workspace number 1
     bindsym $mod+2 workspace number 2
@@ -209,6 +231,11 @@ input * {
 #
 # Resizing containers:
 #
+
+    bindgesture swipe:3:up resize grow width 10ppt
+    bindgesture swipe:3:down resize shrink width 10ppt
+    # bindgesture pinch:3:inward resize shrink width 10ppt
+    # bindgesture pinch:3:outward resize grow width 10ppt
 mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
