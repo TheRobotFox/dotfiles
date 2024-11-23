@@ -26,7 +26,7 @@ set $menu wmenu-run
 #Beauti
 gaps inner 10
 blur enable
-blur_noise 0.1
+blur_noise 0.15
 shadows enable
 corner_radius 5
 default_border pixel
@@ -65,6 +65,11 @@ bindsym $mod+Control+s exec slurp | grim -g -
 bindsym $mod+Shift+comma move workspace to output left
 bindsym $mod+Shift+period move workspace to output right
 
+bindsym Mod4+Mod1+l exec ddcutil -n 9SY64P3 setvcp 0x60 0x0f
+bindsym Mod4+Mod1+h exec ddcutil -n 9SY64P3 setvcp 0x60 0x1b
+
+bindgesture swipe:4:left exec wtype " bn"
+bindgesture swipe:4:right exec wtype " bp"
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
@@ -81,7 +86,7 @@ output * bg ~/.config/sway/wallpaper.jpeg fill
 #
 # exec swayidle -w timeout 300 'swaymsg "output * power off"' resume 'swaymsg "output * power on"'
 exec wl-gammarelay
-exec swayidle timeout 300 "systemctl suspend" before-sleep 'waylock'
+exec swayidle -w timeout 500 "systemctl suspend" before-sleep 'waylock'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -104,6 +109,10 @@ input * {
 }
 
 input "1452:591:NuPhy_Halo75" {
+    xkb_layout "us"
+    xkb_variant "altgr-intl"
+}
+input "1452:598:CX_2.4G_Wireless_Receiver" {
     xkb_layout "us"
     xkb_variant "altgr-intl"
 }
@@ -232,10 +241,10 @@ input "1452:591:NuPhy_Halo75" {
 # Resizing containers:
 #
 
-    bindgesture swipe:3:up resize grow width 10ppt
-    bindgesture swipe:3:down resize shrink width 10ppt
-    # bindgesture pinch:3:inward resize shrink width 10ppt
-    # bindgesture pinch:3:outward resize grow width 10ppt
+    bindgesture swipe:3:up focus down
+    bindgesture swipe:3:down focus up
+    # bindgesture swipe:3:up resize grow width 10ppt
+    # bindgesture swipe:3:down resize shrink width 10ppt
 mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
