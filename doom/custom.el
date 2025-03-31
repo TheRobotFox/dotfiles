@@ -7,6 +7,9 @@
    "https://github.com/clangd/clangd/releases/download/19.1.2/clangd-linux-19.1.2.zip")
  '(lsp-clangd-version "19.1.2")
  '(org-latex-packages-alist '(("" "minted" nil nil)))
+ '(org-latex-pdf-process
+   '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f -shell-escape"))
+ '(org-latex-to-mathml-convert-command "latexmlmath %i --presentationmathml=%o")
  '(org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

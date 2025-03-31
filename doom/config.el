@@ -138,6 +138,12 @@
               (load "multiple-cursors-core.el")
               (remove-hook 'multiple-cursors-mode-hook #'my/work-around-multiple-cursors-issue))))
 
+(setq haskell-hoogle-server-command (lambda (port)
+                (list "stack" "hoogle" "--" "server"
+                        "--local"
+                        "-p"
+                        (number-to-string port))))
+
 ;; Buffer movement
 (map! "<C-left>" #'next-buffer)
 (map! "<C-right>" #'previous-buffer)
@@ -373,3 +379,52 @@
 
 
 (require 'org-roam-export)
+
+;; ligatures
+;; (set-ligatures! 'prog-mode :sqrt "sqrt" :infinity "INFINITY")
+(plist-put! +ligatures-extra-symbols
+    :name          "»"
+    :src_block     "»"
+    :src_block_end "«"
+    :quote         "“"
+    :quote_end     "”"
+    ;; Functional
+    :lambda        "λ"
+    :def           "ƒ"
+    :composition   "∘"
+    :map           "↦"
+    ;; Types
+    :null          "∅"
+    :true          "⊤"
+    :false         "⊥"
+    :int           "ℤ"
+    :float         "ℝ"
+    :str           "𝕊"
+    :bool          "𝔹"
+    :list          "𝕃"
+    ;; Flow
+    :not           "¬"
+    :in            "∈"
+    :not-in        "∉"
+    :and           "∧"
+    :or            "∨"
+    :for           "∀"
+    :some          "∃"
+    :return        "⟼"
+    :yield         "⟻"
+    ;; Other
+    :sqrt          "√"
+    :infinity      "∞"
+    :uint          "ℕ"
+    :union         "⋃"
+    :intersect     "∩"
+    :diff          "∖"
+    :tuple         "⨂"
+    :pipe          "" ;; FIXME: find a non-private char
+    :dot           "•")
+
+(set-ligatures! 'c-mode
+        :sqrt "sqrt"
+        :infinity "INFINITY"
+        :uint "unsigned int")
+()
