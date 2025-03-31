@@ -16,7 +16,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term foot
+set $term ghostty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -39,7 +39,7 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # Network
-bindsym Mod4+i exec ~/.config/i3/nmcn.sh
+bindsym Mod4+i exec ~/.config/sway/net.sh
 exec --no-startup-id nm-applet
 
 # Power
@@ -86,7 +86,7 @@ output * bg ~/.config/sway/wallpaper.jpeg fill
 #
 # exec swayidle -w timeout 300 'swaymsg "output * power off"' resume 'swaymsg "output * power on"'
 exec wl-gammarelay
-exec swayidle -w timeout 500 "systemctl suspend" before-sleep 'waylock'
+exec swayidle -w timeout 600 "systemctl suspend" before-sleep 'waylock'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -108,6 +108,10 @@ input * {
     xkb_layout "de"
 }
 
+input "1452:591:BY_Tech_NuPhy_Halo75" {
+    xkb_layout "us"
+    xkb_variant "altgr-intl"
+}
 input "1452:591:NuPhy_Halo75" {
     xkb_layout "us"
     xkb_variant "altgr-intl"
