@@ -33,7 +33,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'whiteboard)
 (setq mouse-wheel-progressive-speed nil)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -185,14 +185,14 @@
 (map! :leader "cx" #'switch-flycheck-list-errors)
 
 ; Ispell
-(with-eval-after-load "ispell"
- (setenv "LANG" "en_US.UTF-8")
- (setq ispell-program-name "hunspell")
- (setq ispell-dictionary "de_DE,en_US")
- (ispell-set-spellchecker-params)
- (ispell-hunspell-add-multi-dic "de_DE,en_US,en_GB"))
+;; (with-eval-after-load "ispell"
+;;  (setenv "LANG" "en_US.UTF-8")
+;;  (setq ispell-program-name "hunspell")
+;;  (setq ispell-dictionary "de_DE,en_US")
+;;  (ispell-set-spellchecker-params)
+;;  (ispell-hunspell-add-multi-dic "de_DE,en_US,en_GB"))
 
-(map! :leader "pl" 'ispell-hunspell-add-multi-dic)
+;; (map! :leader "pl" 'ispell-hunspell-add-multi-dic)
 
 ;; Git
 (map! :leader "gm" 'smerge-keep-current)

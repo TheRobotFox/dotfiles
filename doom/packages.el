@@ -50,11 +50,8 @@
 ;(unpin! t)
 
 (package! topspace)
-;; (package! skewer-mode)
-;; (package! skewer-reload-stylesheets)
-(package! impatient-mode)
+;; (package! impatient-mode)
 (package! edit-indirect)
-;; (package! org-transclusion)
 (package! ob-mips :recipe (:host github :repo "therobotfox/ob-mips"))
 (package! org-html-themes :recipe (:host github :repo "fniessen/org-html-themes"))
 (package! ox-gfm :recipe (:host github :repo "larstvei/ox-gfm"))
