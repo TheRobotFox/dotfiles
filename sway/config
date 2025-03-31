@@ -126,6 +126,14 @@ input "1452:598:CX_2.4G_Wireless_Receiver" {
 }
 
 
+input "1386:178:Wacom_Intuos3_9x12_Pen" map_to_output "Dell Inc. DELL U4320Q GMHGVS2"
+
+output "Dell Inc. DELL U4323QE 9SY64P3" {
+       position 0 0
+}
+output "Dell Inc. DELL U4320Q GMHGVS2" {
+}
+
 # input * xkb_variant "latin1"
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
