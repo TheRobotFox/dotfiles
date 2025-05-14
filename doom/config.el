@@ -253,6 +253,36 @@
 (setq org-latex-src-block-backend 'minted)
 (setq org-reveal-hlevel 2)
 
+(defun my/text-scale-adjust-latex-previews ()
+  "Adjust the size of latex preview fragments when changing the
+buffer's text scale."
+  (pcase major-mode
+    ('latex-mode
+     (dolist (ov (overlays-in (point-min) (point-max)))
+       (if (eq (overlay-get ov 'category)
+               'preview-overlay)
+           (my/text-scale--resize-fragment ov))))
+    ('org-mode
+     (dolist (ov (overlays-in (point-min) (point-max)))
+       (if (eq (overlay-get ov 'org-overlay-type)
+               'org-latex-overlay)
+           (my/text-scale--resize-fragment ov))))))
+
+(defun my/text-scale--resize-fragment (ov)
+  (overlay-put
+   ov 'display
+   (cons 'image
+         (plist-put (plist-put
+          (cdr (overlay-get ov 'display))
+          :scale (+ 0.75 (* 0.3 text-scale-mode-amount)))
+          :ascent 75))))
+
+(add-hook 'text-scale-mode-hook #'my/text-scale-adjust-latex-previews)
+
+
+
+
+
 (evil-define-key 'normal gdb-edit-locals-map-1 (kbd "c") 'gdb-edit-value)
 (evil-define-key 'normal gdb-edit-locals-map-1 (kbd "RET") 'gdb-edit-value)
 (evil-define-key 'normal gdb-breakpoints-mode-map (kbd "d") 'gdb-delete-breakpoint)
@@ -271,6 +301,9 @@
 
 (map! :leader "pw" 'org-agenda-file-to-front)
 (map! :leader "pW" 'org-remove-file)
+
+
+
 
 ;; TODO Open Project.org in buffer
 
@@ -380,7 +413,7 @@
 
 (require 'org-roam-export)
 
-;; ligatures
+ ;; ligatures
 ;; (set-ligatures! 'prog-mode :sqrt "sqrt" :infinity "INFINITY")
 (plist-put! +ligatures-extra-symbols
     :name          "»"
@@ -428,3 +461,8 @@
         :infinity "INFINITY"
         :uint "unsigned int")
 ()
+;; Haskell
+(require 'haskell-mode)
+(map! :localleader :mode haskell-mode "k" 'haskell-hoogle)
+(setq haskell-hoogle-command "hoogle -n 1000")
+(map! :localleader :mode haskell-mode "r" '+haskell/open-repl)

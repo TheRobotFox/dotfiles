@@ -10,6 +10,8 @@
  '(org-latex-pdf-process
    '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f -shell-escape"))
  '(org-latex-to-mathml-convert-command "latexmlmath %i --presentationmathml=%o")
+ '(org-pretty-entities-include-sub-superscripts nil)
+ '(org-preview-latex-default-process 'dvisvgm)
  '(org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
