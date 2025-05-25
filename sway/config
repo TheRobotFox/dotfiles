@@ -56,7 +56,8 @@ bindsym $mod+o exec waylock
 
 # Misc
 bindsym $mod+Return exec nemo
-bindsym $mod+BackSpace exec /home/new/.config/emacs/bin/org-capture
+bindsym $mod+BackSpace exec emacsclient --eval "(emacs-everywhere)"
+for_window [title="Emacs Everywhere :: *"] floating enable
 bindsym $mod+Shift+BackSpace exec /usr/bin/emacsclient --create-frame --alternate-editor=""
 bindsym $mod+Shift+s exec slurp | grim -g - - | wl-copy
 bindsym $mod+Control+s exec slurp | grim -g -
@@ -86,7 +87,7 @@ output * bg ~/.config/sway/wallpaper.jpeg fill
 #
 # exec swayidle -w timeout 300 'swaymsg "output * power off"' resume 'swaymsg "output * power on"'
 exec wl-gammarelay
-exec swayidle -w timeout 600 before-sleep 'waylock'
+exec swayidle idlehint 600 before-sleep 'waylock'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
