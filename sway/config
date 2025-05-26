@@ -47,8 +47,8 @@ bindsym $mod+Shift+Escape exec systemctl hibernate
 bindsym $mod+Control+Escape exec shutdown now
 bindsym $mod+Escape exec systemctl suspend
 
-bindsym $mod+KP_Multiply exec bash ~/.config/sway/brightness_up.sh
-bindsym $mod+KP_Divide exec bash ~/.config/sway/brightness_down.sh
+bindsym XF86MonBrightnessUp exec bash ~/.config/i3/brightness_up.sh
+bindsym XF86MonBrightnessDown exec bash ~/.config/i3/brightness_down.sh
 exec_always ~/.config/sway/brightness_startup.sh
 
 bindsym $mod+o exec waylock
@@ -120,6 +120,15 @@ input "1452:591:NuPhy_Halo75" {
 input "1452:598:CX_2.4G_Wireless_Receiver" {
     xkb_layout "us"
     xkb_variant "altgr-intl"
+}
+
+
+input "1386:178:Wacom_Intuos3_9x12_Pen" map_to_output "Dell Inc. DELL U4320Q GMHGVS2"
+
+output "Dell Inc. DELL U4323QE 9SY64P3" {
+       position 0 0
+}
+output "Dell Inc. DELL U4320Q GMHGVS2" {
 }
 
 # input * xkb_variant "latin1"
