@@ -104,6 +104,9 @@
      "/home/new/org/roam/20250522194117-signaturen.org"
      "/home/new/org/roam/20250523185410-wahrscheinlichkeitsraum.org"
      "/home/new/org/roam/20250523192350-potenzmenge.org"))
+ '(org-babel-load-languages
+   '((awk . t) (latex . t) (dot . t) (plantuml . t) (shell . t)
+     (haskell . t) (C . t) (emacs-lisp . t)))
  '(org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

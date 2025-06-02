@@ -757,7 +757,7 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
        :list          "𝕃"
        
        ;; Flow
-       :not           "￢"
+       :not           "¬"
        :in            "∈"
        :not-in        "∉"
        :and           "∧"
@@ -1118,29 +1118,45 @@ Use karthink's Org patch for now for better Latex integration
 ** org roam
   #+begin_src emacs-lisp
   (use-package org-contrib)
-    (use-package org-eldoc)
-    (use-package org-roam
-      :after org
-      :custom
-      (org-roam-directory (file-truename "~/org/roam/"))
-      :bind
-      ("C-c n l" . org-roam-buffer-toggle)
-      ("C-c n f" . org-roam-node-find)
-      ("C-c n g" . org-roam-graph)
-      ("C-c n i" . org-roam-node-insert)
-      ("C-c n c" . org-roam-capture)
+  (use-package org-eldoc)
+  ;; (use-package org-roam-he
+  ;;   :straight
+  ;;   (:host github :repo "TheRobotFox/org-roam-hyperedge" :branch "main" :files ("*.el"))
+  ;;   ;;:load-path "straight/repos/org-roam-he/"
+  ;;   )
+  (use-package org-roam
+    :custom
+    (org-roam-directory (file-truename "~/org/roam/"))
+    
+    :config
+    (defvar-keymap org-node-map
+      "f" #'org-roam-node-find
+      "F" #'org-roam-he-find-oriented
+      
+      "i" #'org-roam-node-insert
+      "I" #'org-roam-he-insert
+
+      "r" #'org-roam-buffer-toggle
+      "u" #'org-roam-ui-openx
+
+      ;;"C" #'org-roam-capture ;; redundent?
+      "C" #'org-id-get-create
+      "c" #'org-capture
+      "e" #'org-roam-extract-subtree
+      
       ;; Dailies
-      ("C-c n j" . org-roam-dailies-capture-today)
-      ("C-c n I" . org-id-get-create)
-      :config
-         (setq org-roam-v2-ack t)
-     (org-roam-db-autosync-mode)
-     (add-hook 'org-roam-buffer-postrender-functions
-  (lambda () (org-latex-preview--preview-region
-        org-latex-preview-process-default (point-min) (point-max)))) ; latex preview
-     ;; If using org-roam-protocol
-     (require 'org-roam-protocol)
-     (require 'org-roam-export))
+      "C-c n j" #'org-roam-dailies-capture-today
+      "C-c n I" #'org-id-get-create)
+    :bind-keymap ("C-c n" . org-node-map)
+    :config
+    (setq org-roam-v2-ack t)
+    (org-roam-db-autosync-mode)
+    (add-hook 'org-roam-buffer-postrender-functions
+  	    (lambda () (org-latex-preview--preview-region
+  			org-latex-preview-process-default (point-min) (point-max)))) ; latex preview
+    ;; If using org-roam-protocol
+    (require 'org-roam-protocol)
+    (require 'org-roam-export))
     	 #+end_src
 - Node-Hierachie-View ::
    #+begin_src emacs-lisp
@@ -1607,22 +1623,23 @@ Use karthink's Org patch for now for better Latex integration
     (org-latex-toc-command . "\\tableofcontents\\pagebreak"))
   #+end_src
 ** C/C++
-      - Docs ::
-	#+begin_src emacs-lisp
+- Docs ::
+  #+begin_src emacs-lisp
 	(use-package emacs
 	  :dash
 	  (c-ts-mode "C")
 	  (c++-ts-mode "C++"))
 	#+end_src
-      - LSP ::
-     #+begin_src emacs-lisp
-     (use-package emacs
-       :hook
-       ((c++-ts-mode c-ts-mode) . lsp)
-       (lsp-clangd-after-open . (lambda () (keymap-set lsp-keymap "s" #'lsp-clangd-find-other-file))))
-     #+end_src
-   - Ligatures ::
-#+begin_src emacs-lisp
+- LSP :: 
+  #+begin_src emacs-lisp
+	   (use-package emacs
+	     :hook
+	     ((c++-ts-mode c-ts-mode) . lsp)
+	     (lsp-clangd-after-open . (lambda () (keymap-set lsp-keymap "s" #'lsp-clangd-find-other-file))))
+      #+end_src
+- Ligatures ::
+
+  #+begin_src emacs-lisp
 (use-package emacs
   :config
   (set-ligatures! 'c++-ts-mode
@@ -1663,12 +1680,34 @@ Use karthink's Org patch for now for better Latex integration
 ** Java
    #+begin_src emacs-lisp
      (use-package lsp-java
-       :hook (java-ts-mode . lsp)
+       :hook
+       (java-ts-mode . lsp)
+       (java-ts-mode . (lambda () (setq tab-width 4)))
        :custom
        (lsp-java-vmargs '("-XX:+UseParallelGC" "-XX:GCTimeRatio=4"
    "-XX:AdaptiveSizePolicyWeight=90"
    "-Dsun.zip.disableMemoryMapping=true" "-Xmx4G" "-Xms500m")))
    #+end_src
+- Ligatures ::
+#+begin_src emacs-lisp
+(use-package emacs
+  :config
+  (set-ligatures! 'java-ts-mode
+    ;; Types
+    :null "null"
+    :true "true" :false "false"
+    :int "int" :float "float"
+    :str "String"
+    :bool "boolean"
+    ;; Flow
+    :not "!"
+    :and "&&" :or "||"
+    :for "for"
+    :return "return"
+    ))
+
+#+end_src
+
 ** Haskell
    #+begin_src emacs-lisp
    (use-package haskell-ts-mode
@@ -1737,7 +1776,7 @@ Use karthink's Org patch for now for better Latex integration
     (set-ligatures! 'haskell-ts-mode
       :composition "."))
   #+end_src
-
+  
 * Bindings
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "init.el" :results none
