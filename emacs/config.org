@@ -386,7 +386,7 @@ Replace built-in navigation, search with consult actions
 #+begin_src emacs-lisp
   (use-package yasnippet
     :custom
-    yas-snippet-dirs '("~/.config/emacs/snippets")
+    (yasnippet-snippets-dir "~/.config/emacs/snippets")
     :config
     (yas-global-mode 1))
   (use-package yasnippet-snippets
@@ -545,6 +545,8 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
   (lsp-completion-provider :none) ;; we use Corfu!
   (lsp-headerline-breadcrumb-enable nil)
   :after lsp-ui
+  :custom-face
+  (lsp-ui-doc-background ((t (:background "White"))))
   :init
   (defun my/lsp-mode-setup-completion ()
     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
@@ -725,7 +727,7 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
    #+begin_src emacs-lisp
      (use-package all-the-icons)
      (use-package all-the-icons-dired
-       :hook (dired-mode . all-the-icons-dired-mode)))
+       :hook (dired-mode . all-the-icons-dired-mode))
    #+end_src
 ** Ligatures
    Use ligature package with stolen doom-emacs ligature code
@@ -1680,6 +1682,8 @@ Use karthink's Org patch for now for better Latex integration
      :config
      (add-to-list 'treesit-language-source-alist
    	       '(haskell . ("https://github.com/tree-sitter/tree-sitter-haskell" "v0.23.1"))))
+     (unless (treesit-language-available-p 'haskell)
+       (treesit-install-language-grammar 'haskell))
 
    #+end_src
 
