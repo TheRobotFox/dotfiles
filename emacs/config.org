@@ -9,16 +9,25 @@
 ** Emacs Setup
  
  #+begin_src emacs-lisp
- (setq inhibit-startup-screen t)
- (menu-bar-mode -1)
- (tool-bar-mode -1)
- (scroll-bar-mode -1)
- (global-visual-line-mode t)
- (setq gc-cons-threshold-original gc-cons-threshold)
- (setq gc-cons-threshold (* 1024 1024 100))
- (setq custom-file "~/.config/emacs/custom.el")
- (load custom-file)
- (repeat-mode t)
+  (setq inhibit-startup-screen t)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (global-visual-line-mode t)
+  ;; (defun my-minibuffer-setup-hook ()
+  ;;  (setq gc-cons-threshold most-positive-fixnum))
+
+ ;; (defun my-minibuffer-exit-hook ()
+ ;;   (setq gc-cons-threshold 800000))
+
+ ;; (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+ ;; (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+
+  (setq gc-cons-threshold (* 1024 1024 200))
+ (setq read-process-output-max (* 1024 1024))
+  (setq custom-file "~/.config/emacs/custom.el")
+  (load custom-file)
+  (repeat-mode t)
  #+end_src
 ** Straight
 *** Early Init
@@ -79,57 +88,60 @@ Integration with use-package for automatic hiding via =:diminish= and =:delight=
 ** Consult :lsp:
 Replace built-in navigation, search with consult actions
    #+begin_src emacs-lisp 
-
    (use-package consult
-     :bind (
-   	 ("C-c M-x" . consult-mode-command)
-   	 ("C-x C-k c" . consult-kmacro)
-   	 ("C-c k" . consult-man)
-   	 ("C-h I" . consult-info)
-   	 
-   	 ("C-x b" . consult-buffer)
-   	 ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-   	 ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-   	 ("C-x t b" . consult-buffer-other-tab)    ;; orig. switch-to-buffer-other-tab
-            ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
-            ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
+       :bind 
+       (("C-c M-x" . consult-mode-command)
+        ("C-x C-k c" . consult-kmacro)
+        ("C-c k" . consult-man)
+        ("C-h I" . consult-info)
+        
+        ("C-x b" . consult-buffer)
+        ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+        ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+        ("C-x t b" . consult-buffer-other-tab)    ;; orig. switch-to-buffer-other-tab
+        ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
+        ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
 
-   	 ;; Custom M-# bindings for fast register access
-   	 ("M-#" . consult-register-load)
-            ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
-            ("C-M-#" . consult-register)
-    	 
-   	 ("M-y" . consult-yank-from-kill-ring)
-   	 ("C-x p g" . consult-ripgrep)
-   	 
-   	 ("C-x n l" . consult-focus-lines)
-   	 ("C-x n k" . consult-keep-lines)
-   	 ;;("M-g f" . consult-flymake)
-   	 ("M-g e" . consult-compile-error)
-   	 ("M-g g" . consult-goto-line)
-   	 ("M-g i" . consult-imenu)
-   	 ("M-g I" . consult-imenu-multi)
-   	 ("M-g M" . consult-global-mark)
-   	 ("M-g m" . consult-mark)
-   	 ("M-g c" . vc-find-conflicted-file)
-   	 
-   	 ;; M-s bindings in `search-map'
-   	 ("M-s f" . consult-fd)                  ;; Alternative: consult-fd
-   	 ("M-s c" . consult-locate)
-   	 ("M-s g" . consult-grep)
-   	 ("M-s G" . consult-git-grep)
-            ("M-s r" . consult-ripgrep)
-            ("M-s l" . consult-line)
-            ("M-s L" . consult-line-multi)
-            ("M-s k" . consult-keep-lines)
-            ("M-s u" . consult-focus-lines)
-    	 
-   	 ("M-s e" . consult-isearch-history)
-   	 :map isearch-mode-map
-   	 ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
-   	 ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
-   	 ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
-   	 ("M-s L" . consult-line-multi))
+        ;; Custom M-# bindings for fast register access
+        ("M-#" . consult-register-load)
+        ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+        ("C-M-#" . consult-register)
+        
+        ("M-y" . consult-yank-from-kill-ring)
+        ("C-x p g" . consult-ripgrep)
+        
+        ("C-x n l" . consult-focus-lines)
+        ("C-x n k" . consult-keep-lines)
+
+        ("M-g f" . consult-flymake)
+        ("M-g g" . smerge-start-session)
+        ("M-g e" . consult-compile-error)
+        ("M-g l" . consult-goto-line)
+        ("M-g i" . consult-imenu)
+        ("M-g I" . consult-imenu-multi)
+        ("M-g M" . consult-global-mark)
+        ("M-g m" . consult-mark)
+
+       
+       ("M-s g c" . vc-find-conflicted-file)
+       
+       ;; M-s bindings in `search-map'
+       ("M-s f" . consult-fd)                  ;; Alternative: consult-fd
+       ("M-s c" . consult-locate)
+       ;;("M-s g" . consult-grep)
+       ("M-s g g" . consult-git-grep)
+       ("M-s r" . consult-ripgrep)
+       ("M-s l" . consult-line)
+       ("M-s L" . consult-line-multi)
+       ("M-s k" . consult-keep-lines)
+       ("M-s u" . consult-focus-lines)
+       
+       ("M-s e" . consult-isearch-history)
+       :map isearch-mode-map
+       ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
+       ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
+       ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
+       ("M-s L" . consult-line-multi))
      :init
      ;; Tweak the register preview for `consult-register-load',
      ;; `consult-register-store' and the built-in commands.  This improves the
@@ -298,8 +310,13 @@ Replace built-in navigation, search with consult actions
    Persist shell history across emacs restarts
   #+begin_src emacs-lisp
     (use-package savehist
-      :init
-      (savehist-mode))
+      :config
+      (setq history-length 100)
+  (put 'minibuffer-history 'history-length 50)
+  (put 'evil-ex-history 'history-length 50)
+  (put 'kill-ring 'history-length 100)
+      (savehist-mode 1)
+      )
 
   #+end_src
 *** COMMENT Company
@@ -396,6 +413,27 @@ Replace built-in navigation, search with consult actions
   :config
   (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 #+end_src
+** Popper
+   #+begin_src emacs-lisp
+   (use-package popper
+     :ensure t ; or :straight t
+     :bind
+     ("C-c o"   . popper-toggle)
+     ("C-c O"   . popper-cycle)
+     ("C-c M-o" . popper-toggle-type)
+     :init
+     (setq popper-reference-buffers
+   	'("\\*Messages\\*"
+             "Output\\*$"
+             "\\*Async Shell Command\\*"
+             help-mode
+             compilation-mode
+   	  eshell-mode))
+     ;;(setq popper-group-function #'popper-group-by-project) ; project.el projects
+
+     (popper-mode +1)
+     (popper-echo-mode +1))                ; For echo area hints
+   #+end_src
 
 ** COMMENT tabspaces
 #+begin_src emacs-lisp
@@ -416,7 +454,6 @@ Replace built-in navigation, search with consult actions
   (tabspaces-session t)
   (tabspaces-session-auto-restore t))
 #+end_src
-** TODO Lookup Docs and Definition
 ** Embark
    #+begin_src emacs-lisp
    (use-package embark
@@ -455,11 +492,28 @@ Replace built-in navigation, search with consult actions
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src
-** Magit
+** Git
    #+begin_src emacs-lisp
    (use-package magit
      :bind
-     ("M-g G" . magit-find-file))
+     ("M-s g f" . magit-find-file)
+     :config
+     (defvar-keymap smerge-map
+       :repeat t
+       "n" #'smerge-next
+       "p" #'smerge-prev
+       "t" #'smerge-keep-upper
+       "b" #'smerge-keep-lower
+       "g" #'smerge-keep-all)
+     :hook
+     (smerge-mode
+      . (lambda ()
+          (global-set-key
+   	(kbd "M-g")
+   	(if (smerge-mode)
+   	    goto-map
+   	  smerge-map)))))
+
    #+end_src
 * Editing
 :PROPERTIES:
@@ -548,9 +602,13 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
   :custom-face
   (lsp-ui-doc-background ((t (:background "White"))))
   :init
+   (defun my/orderless-dispatch-flex-first (_pattern index _total)
+    (and (eq index 0) 'orderless-flex))
+
   (defun my/lsp-mode-setup-completion ()
     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
           '(orderless)) ;; Configure orderless
+    (add-hook 'orderless-style-dispatchers #'my/orderless-dispatch-flex-first nil 'local)
     ;; Optionally configure the cape-capf-buster.
     (setq-local completion-at-point-functions (list (cape-capf-buster #'lsp-completion-at-point))))
 
@@ -581,7 +639,8 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
   #+end_src
 - lsp-treemacs ::
   #+begin_src emacs-lisp
- (use-package lsp-treemacs)
+   (use-package lsp-treemacs
+     :functions treemacs-define-doubleclick-action)
   #+end_src
 ** TS-movement
 #+begin_src emacs-lisp
@@ -734,7 +793,7 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
    #+end_src
 ** Ligatures
    Use ligature package with stolen doom-emacs ligature code
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
    (defvar +ligatures-extra-symbols
      '(;; org
    ;;     :name          "»"
@@ -779,13 +838,9 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
        :diff          "∖"
        :tuple         "⨂"
        :pipe          "" ;; FIXME: find a non-private char
-       :dot           "•")
-     "Maps identifiers to symbols, recognized by `set-ligatures'.
-
-   This should not contain any symbols from the Unicode Private Area! There is no
-   universal way of getting the correct symbol as that area varies from font to
-   font.")
-   #+end_src
+       :dot           "•"))
+     ;; "Maps identifiers to symbols, recognized by `set-ligatures'.
+ #+end_src
 - Fancy Vars :: 
 #+begin_src emacs-lisp
 (defvar my/fancy-vars
@@ -1251,6 +1306,10 @@ Use karthink's Org patch for now for better Latex integration
     consult-org-roam-forward-links
     :preview-key "M-.")
    :config
+   (add-to-list 'consult-preview-allowed-hooks 'global-org-modern-mode)
+   (add-to-list 'consult-preview-allowed-hooks 'global-hl-todo-mode)
+   (add-to-list 'consult-preview-allowed-hooks 'olivetti-mode)
+   (add-to-list 'consult-preview-allowed-hooks 'variable-pitch-mode)
    (keymap-set org-node-map "b" #'consult-org-roam-backlinks)
    (keymap-set org-node-map "B" #'consult-org-roam-backlinks-recusive)
    (keymap-set org-node-map "l" #'consult-org-roam-forward-links)
@@ -1269,10 +1328,11 @@ Use karthink's Org patch for now for better Latex integration
     ;;     (?* . "•")
     ;;     (?+ . "‣")))
       :hook
-      (org-mode . org-modern-mode)
+      ;;(org-mode . org-modern-mode)
       (org-agenda-finalize . org-modern-agenda)
       :config
       (set-face-attribute 'org-modern-block-name nil :slant 'italic))
+    (global-org-modern-mode 1)
 
     ;; (use-package org-modern-indent
     ;;   :straight (org-modern-indent :type git :host github :repo "jdtsmith/org-modern-indent")
@@ -1467,26 +1527,6 @@ Use karthink's Org patch for now for better Latex integration
 ** Theme
 - install org-modern
 #+begin_src emacs-lisp
-(use-package org-modern
-
-  :after org
-  :custom
-  (org-modern-hide-stars nil)		; adds extra indentation
-  (org-modern-table t)
-;;  (org-modern-list 
-;;   '(;; (?- . "-")
-;;     (?* . "•")
-;;     (?+ . "‣")))
-  :hook
-  (org-mode . org-modern-mode)
-  (org-agenda-finalize . org-modern-agenda))
-
-;; (use-package org-modern-indent
-;;   :straight (org-modern-indent :type git :host github :repo "jdtsmith/org-modern-indent")
-;;   :config ; add late to hook
-;; (set-face-attribute 'fixed-pitch nil :family "Hack" :height 1.0) ; or whatever font family
-;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
-
 (use-package emacs
   :after org
   :hook (org-mode . variable-pitch-mode)
@@ -1652,6 +1692,9 @@ Use karthink's Org patch for now for better Latex integration
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "init.el" :results none
 :END:
+#+begin_src emacs-lisp
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+#+end_src
 ** LaTeX :org:
    #+begin_src emacs-lisp
    (use-package auctex)
@@ -1804,8 +1847,7 @@ Use karthink's Org patch for now for better Latex integration
   ;;   (flymake-flycheck-diagnostic-function-for 'haskell-hlint))
   ;; (add-to-list 'flymake-diagnostic-functions 'flymake-hlint)
   ;; flycheck backend deprecated October 2022
-  (flycheck-add-next-checker 'haskell-dante '(info . haskell-hlint))
-  )
+  (flycheck-add-next-checker 'haskell-dante '(info . haskell-hlint)))
   #+end_src
 - Consult Hoogle ::
   #+begin_src emacs-lisp
@@ -1837,6 +1879,7 @@ Use karthink's Org patch for now for better Latex integration
     (find-file "~/.config/emacs/config.org"))
   (keymap-global-set "C-j" 'join-line)
   (keymap-global-set "C-S-j" 'duplicate-line)
+  (keymap-global-set "C-x O" (lambda () (interactive)(other-window -1)))
   :bind
   ("C-x C-r" . recentf)
   ("C-x C" . my/open-config)

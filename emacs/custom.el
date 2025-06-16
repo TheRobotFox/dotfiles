@@ -10,7 +10,9 @@
      "6bdc4e5f585bb4a500ea38f563ecf126570b9ab3be0598bdf607034bb07a8875"
      default))
  '(org-agenda-files
-   '("~/.config/emacs/straight/repos/org-roam-he/Readme.org"
+   '("~/org/roam/20250605200621-kovarianz.org"
+     "/home/new/org/roam/20250605012301-varianz.org"
+     "/home/new/.config/emacs/straight/repos/org-roam-he/Readme.org"
      "/home/new/.config/emacs/config.org" "/home/new/org/journal.org"
      "/home/new/org/notes.org" "/home/new/org/projects.org"
      "/home/new/org/todo.org" "/home/new/org/todos.org"
@@ -108,6 +110,7 @@
  '(org-babel-load-languages
    '((awk . t) (latex . t) (dot . t) (plantuml . t) (shell . t)
      (haskell . t) (C . t) (emacs-lisp . t)))
+ '(org-latex-preview-cache 'temp)
  '(org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
