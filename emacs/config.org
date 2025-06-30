@@ -1651,7 +1651,13 @@ Use karthink's Org patch for now for better Latex integration
       :bool "Bool"
       ))
   #+end_src
-  
+** Common Lisp
+   #+begin_src emacs-lisp
+   (use-package sly
+     :custom
+     (inferior-lisp-program "/usr/bin/sbcl"))
+   #+end_src
+
 * Bindings
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "init.el" :results none
