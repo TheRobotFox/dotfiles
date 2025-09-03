@@ -21,7 +21,8 @@ Diagnostics:
     Add: [performance*, modernize*, readability*]
     Remove: [readability-braces-around-statements,
       readability-isolate-declaration,
-      readability-identifier-length]
+      readability-identifier-length,
+      readability-math-missing-parentheses]
     CheckOptions:
       readability-identifier-naming.VariableCase: snake_case
 
