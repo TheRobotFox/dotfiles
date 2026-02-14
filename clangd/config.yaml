@@ -40,5 +40,5 @@ Hover:
   ShowAKA: Yes
 
 # Formatting
-# BasedOnStyle: LLVM
-# IndentWidth: 4
+BasedOnStyle: LLVM
+IndentWidth: 4
