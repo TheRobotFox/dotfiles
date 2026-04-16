@@ -9,26 +9,36 @@
 ** Emacs Setup
  
  #+begin_src emacs-lisp
- (setq inhibit-startup-screen t)
- (menu-bar-mode -1)
- (tool-bar-mode -1)
- (scroll-bar-mode -1)
- (global-visual-line-mode t)
+ ;;; ...  -*- lexical-binding: t -*-
+  (setq inhibit-startup-screen t)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (global-visual-line-mode t)
 
- ;; (defun my-minibuffer-setup-hook ()
- ;;  (setq gc-cons-threshold most-positive-fixnum))
+  ;; (defun my-minibuffer-setup-hook ()
+  ;;  (setq gc-cons-threshold most-positive-fixnum))
 
- ;; (defun my-minibuffer-exit-hook ()
- ;;   (setq gc-cons-threshold 800000))
+  ;; (defun my-minibuffer-exit-hook ()
+  ;;   (setq gc-cons-threshold 800000))
 
- ;; (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
- ;; (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+  ;; (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+  ;; (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 
- (setq gc-cons-threshold (* 1024 1024 200))
- (setq read-process-output-max (* 1024 1024 8))
- (setq custom-file "~/.config/emacs/custom.el")
- (load custom-file)
- (repeat-mode t)
+  (setq backup-directory-alist '("." . ".~"))
+  (setq gc-cons-threshold (* 1024 1024 200))
+  (setq read-process-output-max (* 1024 1024 8))
+  (setq custom-file "~/.config/emacs/custom.el")
+  (load custom-file)
+  (repeat-mode t)
+  (setq backup-directory-alist `((".*" . "~/.config/emacs/backup")))
+  (setq auto-save- `((".*" . "~/.config/emacs/backup")))
+  (setq create-lockfiles nil)
+
+  (auto-insert-mode t)
+  (global-unset-key (kbd "C-x C-c"))
+  (global-auto-revert-mode 1)
+  (setq auto-revert-interval 1)
  #+end_src
 ** Straight
 *** Early Init
@@ -40,6 +50,7 @@
 
 ;; Disable package.el
 (setq package-enable-at-startup nil)
+
 (setenv "LSP_USE_PLISTS" "true")
 
 (provide 'early-init)
@@ -47,36 +58,28 @@
 #+end_src
 *** Bootstrap
 #+begin_src emacs-lisp
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name
-        "straight/repos/straight.el/bootstrap.el"
-        (or (bound-and-true-p straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          (or (bound-and-true-p straight-base-dir)
+              user-emacs-directory)))
+        (bootstrap-version 7))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
 #+end_src
 *** Configuration
-- Allow Inheritance ::
-  When writing a recipie for known packages, the property-list is merged with defaults from the known recipie
   #+begin_src emacs-lisp
-    (setq straight-allow-recipe-inheritance t)
-  #+end_src
-** use-package
-#+begin_src emacs-lisp
   (straight-use-package 'use-package)
-#+end_src
-*** Use Straight as default
-#+begin_src emacs-lisp
   (setq straight-use-package-by-default t)
-#+end_src
+   (setq straight-allow-recipe-inheritance t)
+  #+end_src
 ** Diminish
 Hide or abbreviate minor modes from mode-line
 Integration with use-package for automatic hiding via =:diminish= and =:delight=
@@ -178,19 +181,19 @@ Replace built-in navigation, search with consult actions
 #+end_src
 
 - LSP integration ::
-  #+begin_src emacs-lisp
+  #+begin_src emacs-lisp :tangle no
   (use-package consult-lsp
     :bind
     ("M-g s" . consult-lsp-symbols))
   #+end_src
 ** Flycheck
-   #+begin_src emacs-lisp :tangle no
+   #+begin_src emacs-lisp
     (use-package flycheck
    :ensure t
    :hook (after-init . global-flycheck-mode))
    #+end_src
 - consult integration ::
-  #+begin_src emacs-lisp :tangle no
+  #+begin_src emacs-lisp
   (use-package consult-flycheck
     :bind ("M-g f" . consult-flycheck))  
   #+end_src
@@ -243,15 +246,7 @@ Replace built-in navigation, search with consult actions
 
    ;; Enable optional extension modes:
    (corfu-history-mode)
-   (corfu-popupinfo-mode))
-
- ;; A few more useful configurations...
- (use-package emacs
-    :custom
-
-   ;; Emacs 30 and newer: Disable Ispell completion function.
-   ;; Try `cape-dict' as an alternative.
-   (text-mode-ispell-word-completion nil)
+   (corfu-popupinfo-mode)
 
    ;; Hide commands in M-x which do not apply to the current mode.  Corfu
    ;; commands are hidden, since they are not used via M-x. This setting is
@@ -423,9 +418,11 @@ Replace built-in navigation, search with consult actions
    	'("\\*Messages\\*"
              "Output\\*$"
              "\\*Async Shell Command\\*"
+             "\\*Flycheck error messages\\*"
              help-mode
              compilation-mode
-   	  eshell-mode))
+   	  eshell-mode
+   	  vterm-mode))
      ;;(setq popper-group-function #'popper-group-by-project) ; project.el projects
 
      (popper-mode +1)
@@ -512,6 +509,10 @@ Replace built-in navigation, search with consult actions
    	  smerge-map)))))
 
    #+end_src
+** Vterm
+   #+begin_src emacs-lisp
+   (use-package vterm)
+   #+end_src
 * Editing
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "init.el" :results none
@@ -526,8 +527,8 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
 #+begin_src emacs-lisp
   (use-package embrace
     :bind
-    ("C-c s" . embrace-change)
-    ("C-c d" . embrace-delete))
+    ("C-x C-c" . embrace-change)
+    ("C-x C-d" . embrace-delete))
 #+end_src
 ** Smartparens
 #+begin_src emacs-lisp
@@ -589,37 +590,44 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
       (define-key global-map (kbd "C-M-r") 'isearch-backward-other-window))
 
 #+end_src
-** LSP
+** COMMENT LSP
 #+begin_src emacs-lisp :tangle no
 (use-package lsp-mode
   :custom
   (lsp-completion-provider :none) ;; we use Corfu!
   (lsp-headerline-breadcrumb-enable nil)
-  (lsp-enable-indentation nil) ;; use it
-  :after lsp-ui
-  :custom-face
-  (lsp-ui-doc-background ((t (:background "White"))))
+  (lsp-enable-indentation t) ;; use it
+  (lsp-clangd-binary-path "/usr/local/bin/clangd")
   :init
-   (defun my/lsp-mode-setup-completion ()
-    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-          '(orderless))) ;; Configure orderless
-  (defun +lsp-lookup-definition-handler ()
-    "Find definition of the symbol at point using LSP."
-    (interactive)
-    (let doc (lsp-request "textDocument/hover" (lsp--text-document-position-params))
-    (with-help-window (generate-new-buffer "help") (with-current-buffer standard-output (insert doc )))))
+   (defvar-keymap lsp-keymap
+     "a" #'lsp-execute-code-action
+     "r" #'lsp-rename
+     "h" #'lsp-treemacs-call-hierarchy
+     "f" #'lsp-format-buffer
+     "s" #'lsp-clangd-find-other-file
+     "o" #'lsp-organize-imports
+     "j" #'lsp-avy-lens)
+  :hook ((lsp-mode . lsp-enable-which-key-integration))
 
-  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
-  (defvar-keymap lsp-keymap
-    "a" #'lsp-execute-code-action
-    "r" #'lsp-rename
-    "j" #'lsp-avy-lens)
+   :bind-keymap
+   ("C-c l" . lsp-keymap)
+  :commands lsp)
+;; (use-package lsp-mode
+;;   ;:after lsp-ui
+;;   :custom-face
+;;   (lsp-ui-doc-background ((t (:background "White"))))
+;;   :init
+;;    (defun my/lsp-mode-setup-completion ()
+;;     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+;;           '(orderless))) ;; Configure orderless
+;;   (defun +lsp-lookup-definition-handler ()
+;;     "Find definition of the symbol at point using LSP."
+;;     (interactive)
+;;     (let doc (lsp-request "textDocument/hover" (lsp--text-document-position-params))
+;;     (with-help-window (generate-new-buffer "help") (with-current-buffer standard-output (insert doc )))))
 
-  :hook
-  (lsp-completion-mode . my/lsp-mode-setup-completion)
-  :bind-keymap
-  ("C-c l" . lsp-keymap))
+;;   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+;;   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
 #+end_src
 - lsp-ui ::
   #+begin_src emacs-lisp :tangle no
@@ -659,6 +667,13 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
     (global-set-key (kbd "C-S-c e" ) 'mc/mark-more-like-this-extended))
 
 #+end_src
+** Phi-search
+   #+begin_src emacs-lisp
+   (use-package phi-search
+     :config
+     (global-set-key (kbd "C-s") 'phi-search)
+(global-set-key (kbd "C-r") 'phi-search-backward))
+   #+end_src
 
 ** Treesitter
    #+begin_src emacs-lisp
@@ -704,7 +719,7 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
      (my/tsm/transpose 'treesit-node-next-sibling))
    (defun my/tsm/transpose-backward ()
      (interactive)
-     (my/tsm/transpose treesit-node-prev-sibling))
+     (my/tsm/transpose 'treesit-node-prev-sibling))
 
    (defvar-keymap  tsm-repeat-map
      :repeat (:enter () :exit (tsm/node-mark tsm/mc/mark-all-overlays))
@@ -732,16 +747,108 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
    #+begin_src emacs-lisp
    (use-package wgrep)
    #+end_src
+** Custom
+   #+begin_src emacs-lisp
+
+   (defun create-src-file ()
+     (interactive)
+     (let* ((file (buffer-file-name))
+      	 (ext (file-name-extension file))
+      	 (inc (lambda () (insert "#include \"" (file-name-nondirectory file) "\"\n\n")))
+      	 (create (lambda (new-ext &rest body-fns)
+      		   (let ((new-file (file-name-with-extension file new-ext)))
+      		     (find-file-other-window new-file)
+      		     (if (file-exists-p new-file) (message "File already exits.")
+      		       (mapcar (lambda (fn) (funcall fn)) body-fns))))))
+       (cond
+        ((equal ext "hpp")
+         (funcall create "cpp" inc
+      	       (let* ((root (treesit-buffer-root-node))
+      		      (ns-decl (lambda (node)
+      				 (or (treesit-node-eq root node)
+      				     (equal (treesit-node-type node)
+      					    "namespace_definition"))))
+      		      (current-node (treesit-thing-at (point) ns-decl))
+      		      (ns-name ""))
+      		 
+      		 (while (not (or (null current-node) (treesit-node-eq current-node root)))
+      		   (progn
+      		     (setq ns-name (concat
+      				    (treesit-node-text
+      				     (treesit-node-child-by-field-name current-node "name"))
+      				    (if (> (length ns-name) 0) "::" "")
+      				    ns-name))
+      		     (setq current-node (treesit-parent-until
+      					 current-node ns-decl))))
+      		 (lambda () (if (> (length ns-name) 0)
+      				(insert "namespace " ns-name " {\n} // " ns-name))))))
+        ((equal ext "h") (create "c" inc))
+        (t (message "Language not recognized.")))))
+   #+end_src
+** COMMENT Doxygen
+   #+begin_src emacs-lisp
+   (use-package doxymacs
+  :vc (:url "https://github.com/pniedzielski/doxymacs.git"
+            :rev :newest
+            :lisp-dir "lisp/")
+  :hook (c-mode-common-hook . doxymacs-mode)
+  :bind (:map c-mode-base-map
+              ;; Lookup documentation for the symbol at point.
+              ("C-c d ?" . doxymacs-lookup)
+              ;; Rescan your Doxygen tags file.
+              ("C-c d r" . doxymacs-rescan-tags)
+              ;; Prompt you for a Doxygen command to enter, and its
+              ;; arguments.
+              ("C-c d RET" . doxymacs-insert-command)
+              ;; Insert a Doxygen comment for the next function.
+              ("C-c d f" . doxymacs-insert-function-comment)
+              ;; Insert a Doxygen comment for the current file.
+              ("C-c d i" . doxymacs-insert-file-comment)
+              ;; Insert a Doxygen comment for the current member.
+              ("C-c d ;" . doxymacs-insert-member-comment)
+              ;; Insert a blank multi-line Doxygen comment.
+              ("C-c d m" . doxymacs-insert-blank-multiline-comment)
+              ;; Insert a blank single-line Doxygen comment.
+              ("C-c d s" . doxymacs-insert-blank-singleline-comment)
+              ;; Insert a grouping comments around the current region.
+              ("C-c d @" . doxymacs-insert-grouping-comments))
+  :custom
+    ;; Configure source code <-> Doxygen tag file <-> Doxygen HTML
+    ;; documentation mapping:
+    ;;   - Files in /home/me/project/foo/ have their tag file at
+    ;;     http://someplace.com/doc/foo/foo.xml, and HTML documentation
+    ;;     at http://someplace.com/doc/foo/.
+    ;;   - Files in /home/me/project/bar/ have their tag file at
+    ;;     ~/project/bar/doc/bar.xml, and HTML documentation at
+    ;;     file:///home/me/project/bar/doc/.
+    ;; This must be configured for Doxymacs to function!
+    (doxymacs-doxygen-dirs
+     '(("^/home/new/org/tu/OSPrak/osprak/"
+        "~/org/tu/OSPrak/osprak/tags.xml"
+        "~/org/tu/OSPrak/osprak/doc/html/."))))
+   #+end_src
+** COMMENT AI
+   #+begin_src emacs-lisp
+   (use-package ai-code
+     :config
+     (ai-code-set-backend 'codex)
+     ;; Optional: use a narrower transient menu on smaller frames
+     ;; (setq ai-code-menu-layout 'two-columns)
+     (global-set-key (kbd "C-c a") #'ai-code-menu)
+     (ai-code-magit-setup-transients))
+      (use-package claude-code-ide
+        :bind ("C-c c" . claude-code-ide-menu))
+   #+end_src
 * Extra 
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "init.el" :results none
 :END:
-** PDF tools
+** COMMENT PDF tools
 #+begin_src emacs-lisp
-  (use-package pdf-tools
-  :magic ("%PDF" . pdf-view-mode)
-  :config
-  (pdf-tools-install :no-query))
+(use-package pdf-tools
+  :ensure t
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :pin manual)
 #+end_src
 ** Emacs Everywhere
    #+begin_src emacs-lisp
@@ -833,11 +940,20 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
  #+end_src
 - Fancy Vars :: 
 #+begin_src emacs-lisp
+(defun cartesian-product-call (fn l1 l2)
+  (mapcan (lambda (a)
+	    (mapcar (lambda (b) (funcall fn a b)) l2))
+	  l1))
 (defvar my/fancy-vars
-  (mapcar (lambda (character)
-	    (cons (string ?d character)
-		  (list ?Δ '(Br . cl) character)))
-	  (string-to-list "xyzwts")))
+  (append (mapcar (lambda (character)
+		    (cons (string ?d character)
+			  (list ?Δ '(Br . cl) character)))
+		  (string-to-list "xyzwts"))
+	  (cartesian-product-call (lambda (character subscript)
+			       (cons (string character subscript)
+				     (list character '(Br . cl) subscript)))
+			     (string-to-list "xyzktw")
+			     (string-to-list "nik0123456789"))))
 
 #+end_src
 - Doom Ligatures ::
@@ -1070,7 +1186,7 @@ Use karthink's Org patch for now for better Latex integration
 		   "(provide 'org-version)\n")))
               :pin nil)
   
-  :hook (org-mode . org-latex-preview-auto-mode)
+  :hook (org-mode . org-latex-preview-mode)
   :config
   (keymap-unset org-mode-map "C-j")
   (defun org-directory-file (path)
@@ -1078,6 +1194,9 @@ Use karthink's Org patch for now for better Latex integration
   (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file) ;; open Links in same Window
   
   :custom
+
+  (org-agenda-include-diary t)
+  (diary-file "~/org/diary")
   (org-startup-with-latex-preview t)
   (org-startup-folded 'nofold)
   (org-default-notes-file (concat org-directory "/notes.org"))
@@ -1094,37 +1213,34 @@ Use karthink's Org patch for now for better Latex integration
 #+end_src
 - item-to-heading ::
   #+begin_src emacs-lisp
-  (use-package emacs
-    :after org
-    :config
-    (defun my/promote-item-at-point--render ()
-      "Render org-item as Headline"
-      (when-let* ((item (org-element-at-point))
+      (defun my/promote-item-at-point--render ()
+    "Render org-item as Headline"
+    (when-let* ((item (org-element-at-point))
   		(level (or (org-element-property :level (org-element-lineage item 'headline)) 1))
   		(title (org-element-property :tag item))
   		(content-begin (org-element-contents-begin item))
   		(content-end (org-element-contents-end item)))
-        (concat (s-repeat level "*") " " title "\n" (buffer-substring content-begin content-end))))
-    (defun my/promote-list ()
-      (interactive )
-      (let* ((list-struct (org-list-struct))
+      (concat (s-repeat level "*") " " title "\n" (buffer-substring content-begin content-end))))
+  
+  (defun my/promote-list ()
+    (interactive )
+    (let* ((list-struct (org-list-struct))
   	   (list-begin (car (car list-struct)))
   	   (list-end (car (last (car (last list-struct)))))
   	   (res ""))
-        
-        (mapc (lambda (e) (when (= 0 (nth 1 e))
+      
+      (mapc (lambda (e) (when (= 0 (nth 1 e))
   			  (goto-char (1+(car e)))
   			  (setq res (concat res (my/promote-item-at-point--render))))) list-struct)
-        (delete-region list-begin list-end)
-        (goto-char list-begin)
-        (insert res))))
+      (delete-region list-begin list-end)
+      (goto-char list-begin)
+      (insert res)))
   #+end_src
 - org-todo-keywords ::
   Add more expressive TODO keywords
   #+begin_src emacs-lisp
-  (use-package org
-    :custom
-    (org-todo-keywords
+
+    (setq org-todo-keywords
      '((sequence
         "TODO(t)"
         "WAIT(w@/!)"
@@ -1133,15 +1249,41 @@ Use karthink's Org patch for now for better Latex integration
         "DISSOLVE(e)"
         "|"
         "DONE(d!)"
-        "KILL(k@/!)"))))
+        "KILL(k@/!)")))
+  #+end_src
+- capture ::
+  #+begin_src emacs-lisp
+
+    (defun ha-file-for-class()
+      (interactive)
+      (let* ((dir "~/org/tu/")
+  	   (class (completing-read "Modul: " (--filter (file-directory-p (file-name-concat dir it))
+  						       (directory-files dir nil (rx (not "."))))))
+  	   (class-dir (file-name-concat dir class))
+  	   (ha-count (length (directory-files class-dir nil (rx "HA" digit))))
+  	   (file (file-name-concat class-dir (format "HA%d.org" (1+ ha-count)))))
+  	(set-buffer (find-file-noselect file))
+  	(insert (format "#+TITLE: %s Hausaufgabe %d" class (1+ ha-count)))
+  	(newline)))
+    
+    (setq org-capture-templates
+   '(("t" "Todo" entry (file+headline "~/org/todos.org" "Todos")
+      "* TODO %?\n  %i\n  %a")
+     ("T" "Task" entry (file+headline "~/org/todos.org" "Tasks")
+      "* TODO %?\nDEADLINE: %^{deadline}t\n  %i\n")
+     ;; TODO DOOM LIKE    ("j" "Journal" entry (file (org-directory-file "journal.org")) "* %^{Title} %T\n%?")
+     ("p" "Project Idea" entry (file "~/org/ideas.org") "*  %^{Title} %t\n%?")
+     ("a" "Question" entry (file "~/org/questions.org") "* TODO %^{Question} %T\n%?")
+     ("h" "Homework" plain (function ha-file-for-class) "")
+     ))
   #+end_src
 ** org roam
   #+begin_src emacs-lisp
   (use-package org-contrib)
   (use-package org-eldoc)
-  (use-package org-roam-he
-    :straight
-    (:host github :repo "TheRobotFox/org-roam-hyperedge"))
+;;  (use-package org-roam-he
+;;    :straight
+;;    (:host github :repo "TheRobotFox/org-roam-hyperedge"))
   (use-package org-roam
     :custom
     (org-roam-directory (file-truename "~/org/roam/"))
@@ -1177,11 +1319,8 @@ Use karthink's Org patch for now for better Latex integration
     ("C-c n" . org-node-map))
     	 #+end_src
 - Node-Hierachie-View ::
-   #+begin_src emacs-lisp
-   (use-package emacs
-     :after org-roam
-      :config
-      ;; Stolen code from doom emacs
+   #+begin_src emacs-lisp 
+(with-eval-after-load 'org-roam      ;; Stolen code from doom emacs
       (cl-defmethod org-roam-node-doom-filetitle ((node org-roam-node))
         "Return the value of \"#+title:\" (if any) from file that NODE resides in.
       If there's no file-level title in the file, return empty string."
@@ -1211,23 +1350,23 @@ Use karthink's Org patch for now for better Latex integration
       (setq org-roam-node-display-template (concat "${doom-hierarchy:*} " (propertize "${tags:15}" 'face 'org-tag))))
    #+end_src
 - UI ::
-  #+begin_src emacs-lisp
-    (use-package org-roam-ui
-      :straight
-        (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
-        :after org-roam
-    ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-        ;;         a hookable mode anymore, you're advised to pick something yourself
-    ;;         if you don't care about startup time, use
-    ;;  :hook (after-init . org-roam-ui-mode)
-        :config
-        (setq org-roam-ui-sync-theme t
-              org-roam-ui-follow t
-              org-roam-ui-update-on-save t
-              org-roam-ui-open-on-start t))
+  #+begin_src emacs-lisp :tangle no
+  (use-package org-roam-ui
+    :straight
+      (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
+      :after org-roam
+  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+      ;;         a hookable mode anymore, you're advised to pick something yourself
+  ;;         if you don't care about startup time, use
+  ;;  :hook (after-init . org-roam-ui-mode)
+      :config
+      (setq org-roam-ui-sync-theme t
+            org-roam-ui-follow t
+            org-roam-ui-update-on-save t
+            org-roam-ui-open-on-start t))
       #+end_src
 - Consult :: 
-#+begin_src emacs-lisp
+  #+begin_src emacs-lisp
 (use-package consult-org-roam
    :ensure t
    :after org-roam
@@ -1259,10 +1398,10 @@ Use karthink's Org patch for now for better Latex integration
    (keymap-set org-node-map "g" #'consult-org-roam-search))
 #+end_src
 ** Org-modern
-    - install org-modern
     #+begin_src emacs-lisp
     (use-package org-modern
       :after org
+      :defer t
       :custom
       (org-modern-hide-stars nil)		; adds extra indentation
       (org-modern-table t)
@@ -1277,49 +1416,39 @@ Use karthink's Org patch for now for better Latex integration
       (set-face-attribute 'org-modern-block-name nil :slant 'italic))
     (global-org-modern-mode 1)
 
-    ;; (use-package org-modern-indent
-    ;;   :straight (org-modern-indent :type git :host github :repo "jdtsmith/org-modern-indent")
-    ;;   :config ; add late to hook
-    ;; (set-face-attribute 'fixed-pitch nil :family "Hack" :height 1.0) ; or whatever font family
-    ;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
-
-    (use-package emacs
-      :after org
-      :hook (org-mode . variable-pitch-mode)
-      :custom
-      (org-highlight-latex-and-related '(latex script entities))
+       (add-hook 'org-mode-hook #'variable-pitch-mode)
+      (setq org-highlight-latex-and-related '(latex script entities)
 
       ;; Better Headings
-      (org-adapt-indentation t)
-      (org-hide-leading-stars t)
+      org-adapt-indentation t
+      org-hide-leading-stars t
       ;; (org-startup-indented t)
 
-      (org-eldoc-breadcrumb-separator "→")
+      org-eldoc-breadcrumb-separator "→"
 
       ;; Tags
-      (org-align-tags nil)
-      (org-tags-column 0)
+      org-align-tags nil
+      org-tags-column 0
 
-      (org-special-ctrl-a/e t)
-      (org-insert-heading-respect-content t)
+      org-special-ctrl-a/e t
+      org-insert-heading-respect-content t
 
-      (org-hide-emphasis-markers t)
-      (org-ellipsis "…")
+      org-hide-emphasis-markers t
+      org-ellipsis "…"
       
       ;; agenda
-      (org-agenda-tags-column 0)
+      org-agenda-tags-column 0
       
       
       ;; Display latex unicode symbols
-      (org-pretty-entities t)
-      (org-pretty-entities-include-sub-superscripts nil)
+      org-pretty-entities t
+      org-pretty-entities-include-sub-superscripts nil
       
       ;; prettify src blocks
-      (org-src-fontify-natively t)
-      (org-src-tab-acts-natively t)
-      (org-edit-src-content-indentation 0)
+      org-src-fontify-natively t
+      org-src-tab-acts-natively t
+      org-edit-src-content-indentation 0)
 
-      :config
       ;; fixed pitch fonts
       
       (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
@@ -1442,8 +1571,9 @@ Use karthink's Org patch for now for better Latex integration
         (dotimes (_ count) (+org--insert-item 'above)))
       
       (define-key org-mode-map (kbd "C-<return>") #'+org/insert-item-below)
-      (define-key org-mode-map (kbd "C-S-<return>") #'+org/insert-item-above))
+      (define-key org-mode-map (kbd "C-S-<return>") #'+org/insert-item-above)
 #+end_src
+
 *** COMMENT mathpix
     #+begin_src emacs-lisp
     (use-package mathpix.el
@@ -1466,15 +1596,13 @@ Use karthink's Org patch for now for better Latex integration
   (deft-directory org-roam-directory))
 
     #+end_src
-** Babel
+** COMMENT Babel
    #+begin_src emacs-lisp
-   (use-package org
-     :custom
-     (org-plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
-     (org-babel-load-languages
+     (setq org-plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
+     (setq org-babel-load-languages
    '((awk . t) (latex . t) (dot . t) (plantuml . t) (shell . t)
      (haskell . t) (C . t) (emacs-lisp . t) (gnuplot . t)))
-     :hook (org-babel-after-execute . org-redisplay-inline-images))
+ (add-hook org-babel-after-execute org-redisplay-inline-images)
    #+end_src
 
 * Languages
@@ -1518,7 +1646,6 @@ Use karthink's Org patch for now for better Latex integration
       :hook
   	;; LSP
   	((c++-ts-mode c-ts-mode) . eglot-ensure)
-  	;(lsp-clangd-after-open . (lambda () (keymap-set lsp-keymap "s" #'lsp-clangd-find-other-file)))
 
   ;; Treesit
     	((c++-ts-mode c-ts-mode) . (lambda () (my/enable-treesit-extras))))
@@ -1564,7 +1691,7 @@ Use karthink's Org patch for now for better Latex integration
 
 #+end_src
 
-** Java
+** COMMENT Java
    #+begin_src emacs-lisp
    (use-package java-ts-mode
      :hook
@@ -1679,9 +1806,35 @@ Use karthink's Org patch for now for better Latex integration
      (inferior-lisp-program "/usr/bin/sbcl")
      (sly-lisp-implementations '((sbcl ("/usr/bin/sbcl" "--dynamic-space-size" "6Gb")))))
    #+end_src
-** Racket
+** COMMENT Racket
    #+begin_src emacs-lisp
    (use-package racket-mode)
+   #+end_src
+** COMMENT Python
+   #+begin_src emacs-lisp
+   (use-package pyvenv)
+   
+
+   #+end_src
+** COMMENT Agda
+   #+begin_src emacs-lisp
+   (load-file (let ((coding-system-for-read 'utf-8))
+                (shell-command-to-string "agda --emacs-mode locate")))
+   #+end_src
+** COMMENT Vue
+   #+begin_src emacs-lisp
+        (use-package vue-ts-mode
+       :straight (:type git
+    		:repo "https://github.com/8uff3r/vue-ts-mode"
+    		:files (:defaults "*.el"))
+       :config
+       ;; enable corfu-candidate-overlay mode globally
+       ;; this relies on having corfu-auto set to nil
+(setq treesit-language-source-alist
+      '((vue "https://github.com/ikatyang/tree-sitter-vue")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")))
+       )
    #+end_src
 
 * Bindings
@@ -1703,3 +1856,10 @@ Use karthink's Org patch for now for better Latex integration
   ("C-x C" . my/open-config)
   ("C-c i" . insert-char))
 #+end_src
+* OS
+** GhostText
+  #+begin_src emacs-lisp
+  (use-package atomic-chrome)
+  #+end_src
+
+#+RESULTS:

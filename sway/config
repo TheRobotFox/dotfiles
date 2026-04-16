@@ -4,6 +4,10 @@
 #
 # Read `man 5 sway` for a complete reference.
 
+input * {
+      drag_lock disabled
+}
+
 ### Variables
 #
 # font Fira Sans 8
