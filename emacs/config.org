@@ -39,6 +39,7 @@
   (global-unset-key (kbd "C-x C-c"))
   (global-auto-revert-mode 1)
   (setq auto-revert-interval 1)
+ (recentf-mode 1)
  #+end_src
 ** Straight
 *** Early Init
@@ -857,6 +858,10 @@ Edit Pattern enclosed text eg =(..)= or ="string"=
      :custom
      (emacs-everywhere-app-info-function #'emacs-everywhere--app-info-linux-sway))
    #+end_src
+** Matrix
+   #+begin_src emacs-lisp
+   (use-package ement)
+   #+end_src
 * Pretty
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "init.el" :results none
@@ -1596,13 +1601,13 @@ Use karthink's Org patch for now for better Latex integration
   (deft-directory org-roam-directory))
 
     #+end_src
-** COMMENT Babel
+** Babel
    #+begin_src emacs-lisp
      (setq org-plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
      (setq org-babel-load-languages
    '((awk . t) (latex . t) (dot . t) (plantuml . t) (shell . t)
      (haskell . t) (C . t) (emacs-lisp . t) (gnuplot . t)))
- (add-hook org-babel-after-execute org-redisplay-inline-images)
+ (add-hook 'org-babel-after-execute #'org-redisplay-inline-images)
    #+end_src
 
 * Languages
@@ -1631,24 +1636,27 @@ Use karthink's Org patch for now for better Latex integration
   #+end_src
 ** C/C++
   #+begin_src emacs-lisp
-    (use-package c-ts-mode
-  	:dash
-  	(c-ts-mode "C")
-  	(c++-ts-mode "C++")
+  (use-package c-ts-mode
+    :dash
+    (c-ts-mode "C")
+    (c++-ts-mode "C++")
 
-      :custom
-      (c-ts-mode-indent-offset 4)
-      :init
-      ;; Remap the standard C/C++ modes
-      (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
-      (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
-      (add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode))
-      :hook
-  	;; LSP
-  	((c++-ts-mode c-ts-mode) . eglot-ensure)
+    :custom
+    (c-ts-mode-indent-offset 4)
+    :init
+    (add-to-list 'treesit-language-source-alist
+         	       '(cpp . ("https://github.com/tree-sitter/tree-sitter-cpp" "v0.23.4")))
+    
+    ;; Remap the standard C/C++ modes
+    (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+    (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+    (add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode))
+    :hook
+    ;; LSP
+    ((c++-ts-mode c-ts-mode) . eglot-ensure)
 
-  ;; Treesit
-    	((c++-ts-mode c-ts-mode) . (lambda () (my/enable-treesit-extras))))
+    ;; Treesit
+    ((c++-ts-mode c-ts-mode) . (lambda () (my/enable-treesit-extras))))
 
   #+end_src
 - Ligatures ::
@@ -1810,7 +1818,7 @@ Use karthink's Org patch for now for better Latex integration
    #+begin_src emacs-lisp
    (use-package racket-mode)
    #+end_src
-** COMMENT Python
+** Python
    #+begin_src emacs-lisp
    (use-package pyvenv)
    
