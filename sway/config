@@ -131,6 +131,9 @@ output "Dell Inc. DELL U4323QE 9SY64P3" {
 }
 output "Dell Inc. DELL U4320Q GMHGVS2" {
 }
+output "Pioneer Electronic Corporation AV Receiver Unknown" {
+       position -1920 0
+}
 
 # input * xkb_variant "latin1"
 # You can get the names of your inputs by running: swaymsg -t get_inputs
