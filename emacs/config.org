@@ -186,7 +186,7 @@ Replace built-in navigation, search with consult actions
     :bind
     ("M-g s" . consult-lsp-symbols))
   #+end_src
-** Flycheck
+** COMMENT Flycheck
    #+begin_src emacs-lisp
     (use-package flycheck
    :ensure t
@@ -1731,28 +1731,13 @@ Use karthink's Org patch for now for better Latex integration
 ** Haskell
    #+begin_src emacs-lisp
    (use-package haskell-mode)
-;         (use-package haskell-ts-mode
-;           :ensure t
-;           :after treesit
-;           :custom
-;           (haskell-ts-font-lock-level 4)
-;           (haskell-ts-use-indent t)
-;           (haskell-ts-ghci "ghci")
-;           (haskell-ts-use-indent t)
-;           :config
-;           (add-to-list 'treesit-language-source-alist
-;         	       '(haskell . ("https://github.com/tree-sitter/tree-sitter-haskell" "v0.23.1")))
-;   	:init
-;   	(add-to-list 'major-mode-remap-alist '(haskell-mode . haskell-ts-mode)))
-      
-;      (use-package lsp-haskell
- ;         :hook (haskell-ts-mode . lsp))
    #+end_src
 
 - Dante ::
   : TODO: Embark action
   Interactive Haskell eval in buffers and lsp like integration
-  #+begin_src emacs-lisp :no-tangle
+  #+begin_src emacs-lisp :tangle no
+>>>>>>> 39112d7 (haskell)
   ;; (use-package flymake-flycheck)
   (use-package dante
     :ensure t ; ask use-package to install the package
@@ -1783,8 +1768,7 @@ Use karthink's Org patch for now for better Latex integration
     :straight `(:host nil
       		    :repo "https://codeberg.org/rahguzar/consult-hoogle.git"
       		   :files (:defaults "*.el"))
-    :bind ("C-h h" . consult-hoogle)
-     )
+    :bind ("C-h h" . consult-hoogle))
   #+end_src
 - Ligatures ::
   #+begin_src emacs-lisp
