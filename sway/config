@@ -47,9 +47,9 @@ bindsym Mod4+i exec ~/.config/sway/net.sh
 exec --no-startup-id nm-applet
 
 # Power
-bindsym $mod+Shift+Escape exec systemctl hibernate
 bindsym $mod+Control+Escape exec shutdown now
-bindsym $mod+Escape exec systemctl suspend
+bindsym --release $mod+Shift+Escape exec systemctl hibernate
+bindsym --release $mod+Escape exec systemctl suspend
 
 bindsym XF86MonBrightnessUp exec bash ~/.config/i3/brightness_up.sh
 bindsym XF86MonBrightnessDown exec bash ~/.config/i3/brightness_down.sh
