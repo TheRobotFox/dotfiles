@@ -446,7 +446,6 @@ Replace built-in navigation, search with consult actions
      ;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
 
      :config
-
      ;; Hide the mode line of the Embark live/completions buffers
      (add-to-list 'display-buffer-alist
                   '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
@@ -457,7 +456,8 @@ Replace built-in navigation, search with consult actions
    (use-package embark-consult
      :ensure t ; only need to install it, embark loads it after consult if found
      :hook
-     (embark-collect-mode . consult-preview-at-point-mode))
+     (embark-collect-mode . consult-preview-at-point-mode)
+     )
    #+end_src
 ** Git
    #+begin_src emacs-lisp
